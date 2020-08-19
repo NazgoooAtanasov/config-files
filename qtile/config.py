@@ -55,7 +55,10 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
-    Key([mod], "Return", lazy.spawn("termite")),
+    Key([mod], "Return", lazy.spawn("alacritty")),
+    Key([mod], "b", lazy.spawn("alacritty -e bashtop")),
+    
+
 
     # Toggle between different layouts as defined below
     Key([mod], "space", lazy.next_layout()),
@@ -63,7 +66,8 @@ keys = [
 
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
-    Key([mod], "r", lazy.spawncmd()),
+    # Key([mod], "r", lazy.spawncmd()),
+    Key([mod], "r", lazy.spawn("rofi -show run")),
 
     # Switch between groups
     Key([mod], "d", lazy.group["DEV"].toscreen()),
@@ -86,8 +90,9 @@ group_names = [
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 layouts = [
-    layout.MonadTall(margin=6,border_focus="009ffd", border_normal="ef798a", border_width=2),
+    layout.MonadTall(margin=6,border_focus="DCDCDC", border_normal="2F4F4F", border_width=2),
     layout.Max(),
+    layout.Floating(margin=6,border_focus="DCDCDC", border_normal="2F4F4F", border_width=2),
     # layout.Stack(num_stacks=2),
     # Try more layouts by unleashing below layouts.
     # layout.Bsp(),
@@ -112,28 +117,28 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.GroupBox(rounded=False,highlight_method = "line",active = "009ffd",),
-                widget.Prompt(foreground="#009ffd"),
-                widget.WindowName(foreground="#009ffd"),
-                widget.TextBox(text="", foreground="9370DB", fontsize=46, padding=0),
-                widget.Systray(background="#9370DB"),
-                widget.TextBox(text="", foreground="009ffd",background="#9370DB", fontsize=46, padding=0),
-                widget.TextBox(text="updates: ", background="009ffd"),
-                widget.Pacman(background="009ffd", update_interval = 1800,),
-                widget.TextBox(text="", foreground="#ef798a", background="009ffd",padding=0, fontsize=46),
-                widget.Volume(background="#ef798a"),
-                widget.TextBox(text="",background="ef798a", foreground="#009ffd",padding=0, fontsize=46),
-                widget.CPU(background="#009ffd"),
-                widget.TextBox(text="", foreground="#ef798a",background="009ffd",padding=0, fontsize=46),
-                widget.Net(background="#ef798a"),
-                widget.TextBox(text="", foreground="#009ffd",background="ef798a",padding=0, fontsize=46),
-                widget.Battery(background="#009ffd"),
-                widget.TextBox(text="", foreground="#ef798a",background="009ffd",padding=0, fontsize=46),
-                widget.Clock(background="#ef798a", format='%a %d-%m %I:%M'),
-                widget.TextBox(text="", foreground="#009ffd",background="ef798a",padding=0, fontsize=46),
-                widget.CurrentLayout(background="#009ffd"),
+                widget.GroupBox(rounded=False,highlight_method = "line",active = "778899",),
+                widget.Prompt(foreground="#778899"),
+                widget.WindowName(foreground="#778899"),
+                widget.TextBox(text="", foreground="DCDCDC", fontsize=46, padding=0),
+                widget.Systray(background="#DCDCDC"),
+                widget.TextBox(text="", foreground="2F4F4F",background="#DCDCDC", fontsize=46, padding=0),
+                widget.TextBox(text="updates: ", background="2F4F4F"),
+                widget.Pacman(background="2F4F4F", update_interval = 1800,),
+                widget.TextBox(text="", foreground="#778899", background="2F4F4F",padding=0, fontsize=46),
+                widget.Volume(background="#778899"),
+                widget.TextBox(text="",background="778899", foreground="#2F4F4F",padding=0, fontsize=46),
+                widget.CPU(background="#2F4F4F"),
+                widget.TextBox(text="", foreground="#778899",background="2F4F4F",padding=0, fontsize=46),
+                widget.Net(background="#778899"),
+                widget.TextBox(text="", foreground="#2F4F4F",background="778899",padding=0, fontsize=46),
+                widget.KeyboardLayout(background="#2F4F4F",configured_keyboards=['us','bg phonetic']),
+                widget.TextBox(text="", foreground="#778899",background="2F4F4F",padding=0, fontsize=46),
+                widget.Clock(background="#778899", format='%a %H:%M'),
+                widget.TextBox(text="", foreground="#2F4F4F",background="#778899",padding=0, fontsize=46),
+                widget.CurrentLayout(background="#2F4F4F"),
             ],
-            24,
+            20,
         ),
     ),
 ]

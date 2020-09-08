@@ -1,8 +1,7 @@
 #!/bin/sh
 
-feh --bg-scale ~/Pictures/download.jpeg &
 pcmanfm -d &
-redshift-gtk &
+redshift-gtk -P -O 3500 &
 flameshot &
 picom --config ~/.config/picom/picom.conf &
 nitrogen --restore &

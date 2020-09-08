@@ -62,7 +62,7 @@ keys = [
 
     # Toggle between different layouts as defined below
     Key([mod], "space", lazy.next_layout()),
-    Key([mod], "w", lazy.window.kill()),
+    Key([mod], "c", lazy.window.kill()),
 
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
@@ -70,29 +70,29 @@ keys = [
     Key([mod], "r", lazy.spawn("rofi -show run")),
 
     # Switch between groups
-    Key([mod], "d", lazy.group["DEV"].toscreen()),
-    Key([mod, "shift"], "d", lazy.window.togroup("DEV")),
-    Key([mod], "f", lazy.group["FM"].toscreen()),
-    Key([mod, "shift"], "f", lazy.window.togroup("FM")),
-    Key([mod], "s", lazy.group["SY"].toscreen()),
+    Key([mod], "d", lazy.group["dev"].toscreen()),
+    Key([mod, "shift"], "d", lazy.window.togroup("dev")),
+    Key([mod], "f", lazy.group["fm"].toscreen()),
+    Key([mod, "shift"], "f", lazy.window.togroup("fm")),
+    Key([mod], "s", lazy.group["sy"].toscreen()),
     Key([mod, "shift"], "s", lazy.window.togroup("SY")),
-    Key([mod], "c", lazy.group["CHR"].toscreen()),
-    Key([mod, "shift"], "c", lazy.window.togroup("CHR")),
+    Key([mod], "w", lazy.group["www"].toscreen()),
+    Key([mod, "shift"], "w", lazy.window.togroup("www")),
 ]
 
 group_names = [
-        ("DEV", {'layout': 'max'}),
-        ("FM", {'layout': 'max'}),
-        ("SY", {'layout': 'max'}),
-        ("CHR", {'layout': 'max'}),
+        ("dev", {'layout': 'max'}),
+        ("fm", {'layout': 'max'}),
+        ("sy", {'layout': 'max'}),
+        ("www", {'layout': 'max'}),
     ]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 layouts = [
-    layout.MonadTall(margin=6,border_focus="DCDCDC", border_normal="2F4F4F", border_width=2),
+    layout.MonadTall(margin=6),
     layout.Max(),
-    layout.Floating(margin=6,border_focus="DCDCDC", border_normal="2F4F4F", border_width=2),
+    layout.Floating(margin=6),
     # layout.Stack(num_stacks=2),
     # Try more layouts by unleashing below layouts.
     # layout.Bsp(),
@@ -107,8 +107,8 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font='sans',
-    fontsize=14,
+    font='Ubuntu Mono',
+    fontsize=17,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
@@ -117,28 +117,39 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.GroupBox(rounded=False,highlight_method = "line",active = "778899",),
-                widget.Prompt(foreground="#778899"),
-                widget.WindowName(foreground="#778899"),
-                widget.TextBox(text="", foreground="DCDCDC", fontsize=46, padding=0),
-                widget.Systray(background="#DCDCDC"),
-                widget.TextBox(text="", foreground="2F4F4F",background="#DCDCDC", fontsize=46, padding=0),
-                widget.TextBox(text="updates: ", background="2F4F4F"),
-                widget.Pacman(background="2F4F4F", update_interval = 1800,),
-                widget.TextBox(text="", foreground="#778899", background="2F4F4F",padding=0, fontsize=46),
-                widget.Volume(background="#778899"),
-                widget.TextBox(text="",background="778899", foreground="#2F4F4F",padding=0, fontsize=46),
-                widget.CPU(background="#2F4F4F"),
-                widget.TextBox(text="", foreground="#778899",background="2F4F4F",padding=0, fontsize=46),
-                widget.Net(background="#778899"),
-                widget.TextBox(text="", foreground="#2F4F4F",background="778899",padding=0, fontsize=46),
-                widget.KeyboardLayout(background="#2F4F4F",configured_keyboards=['us','bg phonetic']),
-                widget.TextBox(text="", foreground="#778899",background="2F4F4F",padding=0, fontsize=46),
-                widget.Clock(background="#778899", format='%a %H:%M'),
-                widget.TextBox(text="", foreground="#2F4F4F",background="#778899",padding=0, fontsize=46),
-                widget.CurrentLayout(background="#2F4F4F"),
+                widget.GroupBox(rounded=False,highlight_method = "text", active="696969", padding=4, fontsize=18),
+                widget.Prompt(),
+                widget.TextBox(text="[", foreground="696969"),
+                widget.WindowName(foreground="696969", width=bar.CALCULATED),
+                widget.TextBox(text="]", foreground="696969"),
+                widget.TextBox(width=bar.STRETCH),
+
+                widget.Systray(),
+                widget.TextBox(text='|'),
+
+                widget.CPU(),
+                widget.TextBox(text='|'),
+                
+                widget.Net(format='d:{down} u:{up}', width=155),
+                widget.TextBox(text='|'),
+                
+                widget.Battery(format='^ {percent:2.0%}'),
+                widget.TextBox(text='|'),
+
+                widget.TextBox(text="volume: "),
+                widget.Volume(),
+                widget.TextBox(text='|'),
+
+                widget.KeyboardLayout(configured_keyboards=['us','bg phonetic']),
+                widget.TextBox(text='|'),
+
+                widget.Clock(format = "%a, %b %d [ %H:%M ]"),
+                widget.TextBox(text='|'),
+
+                widget.TextBox(text="layout: "),
+                widget.CurrentLayout(),
             ],
-            20,
+            26,
         ),
     ),
 ]

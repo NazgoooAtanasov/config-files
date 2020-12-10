@@ -40,33 +40,17 @@ keys = [
     Key([mod], "k", lazy.layout.down()),
     Key([mod], "j", lazy.layout.up()),
 
-    # Move windows up or down in current stack
-    Key([mod, "control"], "k", lazy.layout.shuffle_down()),
-    Key([mod, "control"], "j", lazy.layout.shuffle_up()),
-
-    # Switch window focus to other pane(s) of stack
-    Key([mod], "Tab", lazy.layout.next()),
-
-    # Swap panes of split stack
-    Key([mod, "shift"], "Tab", lazy.layout.rotate()),
-
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
-    Key([mod], "Return", lazy.spawn("alacritty")),
-    Key([mod], "b", lazy.spawn("alacritty -e bashtop")),
-    
-
-
-    # Toggle between different layouts as defined below
-    Key([mod], "space", lazy.next_layout()),
+    # Keybinds for basic desktop management
     Key([mod], "c", lazy.window.kill()),
-
+    Key([mod], "space", lazy.next_layout()),
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
-    # Key([mod], "r", lazy.spawncmd()),
+    Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
+    Key([mod, "shift"], "k", lazy.layout.shuffle_down()),
+
+    # Keybinds for opening programs
+    Key([mod], "Return", lazy.spawn("alacritty")),
+    Key([mod], "b", lazy.spawn("alacritty -e bashtop")),
     Key([mod], "r", lazy.spawn("rofi -show run")),
 
     # Switch between groups
@@ -81,10 +65,10 @@ keys = [
 ]
 
 group_names = [
-        ("dev", {'layout': 'max'}),
-        ("fm", {'layout': 'max'}),
-        ("sy", {'layout': 'max'}),
-        ("www", {'layout': 'max'}),
+        ("dev", {'layout': 'monadtall'}),
+        ("fm", {'layout': 'monadtall'}),
+        ("sy", {'layout': 'monadtall'}),
+        ("www", {'layout': 'monadtall'}),
     ]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
@@ -130,17 +114,8 @@ screens = [
                 widget.CPU(),
                 widget.TextBox(text='|'),
                 
-                widget.Net(format='d:{down} u:{up}', width=155),
-                widget.TextBox(text='|'),
-                
-                widget.Battery(format='^ {percent:2.0%}'),
-                widget.TextBox(text='|'),
-
                 widget.TextBox(text="volume: "),
                 widget.Volume(),
-                widget.TextBox(text='|'),
-
-                widget.KeyboardLayout(configured_keyboards=['us','bg phonetic']),
                 widget.TextBox(text='|'),
 
                 widget.Clock(format = "%a, %b %d [ %H:%M ]"),

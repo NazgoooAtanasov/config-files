@@ -47,11 +47,15 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_down()),
+    Key([mod], "h", lazy.layout.grow()),
+    Key([mod], "l", lazy.layout.shrink()),
+    Key([mod, "shift"], "q", lazy.shutdown()),
+
 
     # Keybinds for opening programs
     Key([mod], "Return", lazy.spawn("alacritty")),
     Key([mod], "b", lazy.spawn("alacritty -e bashtop")),
-    Key([mod], "r", lazy.spawn("rofi -show run")),
+    Key([mod], "r", lazy.spawn("dmenu_run")),
 
     # Switch between groups
     Key([mod], "d", lazy.group["dev"].toscreen()),
@@ -74,7 +78,7 @@ group_names = [
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 layouts = [
-    layout.MonadTall(margin=6),
+    layout.MonadTall(margin=6, border_focus="cc7000"),
     layout.Max(),
     layout.Floating(margin=6),
     # layout.Stack(num_stacks=2),
@@ -92,7 +96,7 @@ layouts = [
 
 widget_defaults = dict(
     font='Ubuntu Mono',
-    fontsize=17,
+    fontsize=12,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
@@ -101,30 +105,38 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.GroupBox(rounded=False,highlight_method = "text", active="696969", padding=4, fontsize=18),
+                widget.GroupBox(rounded=False, highlight_method = "line", active="cc7000", inactive="cc7000", padding=4, fontsize=12),
                 widget.Prompt(),
-                widget.TextBox(text="[", foreground="696969"),
-                widget.WindowName(foreground="696969", width=bar.CALCULATED),
-                widget.TextBox(text="]", foreground="696969"),
+                widget.TextBox(text="[", foreground="cc7000"),
+                widget.WindowName(foreground="cc7000", width=bar.CALCULATED),
+                widget.TextBox(text="]", foreground="cc7000"),
                 widget.TextBox(width=bar.STRETCH),
 
                 widget.Systray(),
                 widget.TextBox(text='|'),
 
-                widget.CPU(),
+                widget.CPU(foreground="cc7000"),
                 widget.TextBox(text='|'),
                 
-                widget.TextBox(text="volume: "),
-                widget.Volume(),
+                widget.TextBox(text="volume: ", foreground="cc7000"),
+                widget.Volume(foreground="cc7000"),
                 widget.TextBox(text='|'),
 
-                widget.Clock(format = "%a, %b %d [ %H:%M ]"),
+                widget.Clock(format = "%a, %b %d [ %H:%M ]", foreground="cc7000"),
                 widget.TextBox(text='|'),
 
-                widget.TextBox(text="layout: "),
-                widget.CurrentLayout(),
+                widget.KeyboardLayout(foreground="cc7000", 
+                    configured_keyboards=['us', 'bg phonetic'],
+                    display_map={
+                        'us': 'US',
+                        'bg phonetic': 'BG'
+                    }),
+                widget.TextBox(text='|'),
+                
+                widget.TextBox(text="layout: ", foreground="cc7000"),
+                widget.CurrentLayout(foreground="cc7000"),
             ],
-            26,
+            19,
         ),
     ),
 ]

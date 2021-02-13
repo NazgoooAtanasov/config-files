@@ -1,6 +1,6 @@
 #!/bin/sh
 
-redshift-gtk -P -O 4500 &
+redshift-gtk -P -O 3000 &
 flameshot &
-picom --config ~/.config/picom/picom.conf &
+picom --experimental-backend --config ~/.config/picom/picom.conf &
 nitrogen --restore &

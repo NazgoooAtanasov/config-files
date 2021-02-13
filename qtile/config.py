@@ -58,21 +58,24 @@ keys = [
     Key([mod], "r", lazy.spawn("dmenu_run")),
 
     # Switch between groups
-    Key([mod], "d", lazy.group["dev"].toscreen()),
-    Key([mod, "shift"], "d", lazy.window.togroup("dev")),
-    Key([mod], "f", lazy.group["fm"].toscreen()),
-    Key([mod, "shift"], "f", lazy.window.togroup("fm")),
-    Key([mod], "s", lazy.group["sy"].toscreen()),
-    Key([mod, "shift"], "s", lazy.window.togroup("SY")),
-    Key([mod], "w", lazy.group["www"].toscreen()),
-    Key([mod, "shift"], "w", lazy.window.togroup("www")),
+    Key([mod], "1", lazy.group["dev"].toscreen()),
+    Key([mod, "shift"], "1", lazy.window.togroup("dev")),
+    Key([mod], "2", lazy.group["www"].toscreen()),
+    Key([mod, "shift"], "2", lazy.window.togroup("www")),
+    Key([mod], "3", lazy.group["sy"].toscreen()),
+    Key([mod, "shift"], "3", lazy.window.togroup("SY")),
+    Key([mod], "4", lazy.group["fm"].toscreen()),
+    Key([mod, "shift"], "4", lazy.window.togroup("fm")),
+    Key([mod], "5", lazy.group["misc"].toscreen()),
+    Key([mod, "shift"], "5", lazy.window.togroup("misc")),
 ]
 
 group_names = [
         ("dev", {'layout': 'monadtall'}),
-        ("fm", {'layout': 'monadtall'}),
-        ("sy", {'layout': 'monadtall'}),
         ("www", {'layout': 'monadtall'}),
+        ("sy", {'layout': 'monadtall'}),
+        ("fm", {'layout': 'monadtall'}),
+        ("misc", {'layout': 'monadtall'}),
     ]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
@@ -95,46 +98,43 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font='Ubuntu Mono',
+    font='Cascadia Code Bold',
     fontsize=12,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
-
+font_size=13
 screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.GroupBox(rounded=False, highlight_method = "line", active="cc7000", inactive="cc7000", padding=4, fontsize=12),
+                widget.GroupBox(rounded=False, highlight_method="block", active="ffdab9", inactive="cc7000", padding=4, fontsize=12),
                 widget.Prompt(),
-                widget.TextBox(text="[", foreground="cc7000"),
-                widget.WindowName(foreground="cc7000", width=bar.CALCULATED),
-                widget.TextBox(text="]", foreground="cc7000"),
-                widget.TextBox(width=bar.STRETCH),
+                widget.TextBox(fontsize=font_size, text="[", foreground="cc7000"),
+                widget.WindowName(fontsize=font_size, foreground="cc7000", width=bar.CALCULATED),
+                widget.TextBox(fontsize=font_size, text="]", foreground="cc7000"),
+                widget.TextBox(fontsize=font_size, width=bar.STRETCH),
 
                 widget.Systray(),
-                widget.TextBox(text='|'),
+                widget.TextBox(fontsize=font_size, text='|'),
 
-                widget.CPU(foreground="cc7000"),
-                widget.TextBox(text='|'),
-                
-                widget.TextBox(text="volume: ", foreground="cc7000"),
-                widget.Volume(foreground="cc7000"),
-                widget.TextBox(text='|'),
+                widget.TextBox(fontsize=font_size, text="volume: ", foreground="cc7000"),
+                widget.Volume(fontsize=font_size, foreground="cc7000"),
+                widget.TextBox(fontsize=font_size, text='|'),
 
-                widget.Clock(format = "%a, %b %d [ %H:%M ]", foreground="cc7000"),
-                widget.TextBox(text='|'),
+                widget.Clock(fontsize=font_size, format = "%a, %b %d [ %H:%M ]", foreground="cc7000"),
+                widget.TextBox(fontsize=font_size, text='|'),
 
-                widget.KeyboardLayout(foreground="cc7000", 
+                widget.KeyboardLayout(fontsize=font_size, foreground="cc7000", 
                     configured_keyboards=['us', 'bg phonetic'],
                     display_map={
                         'us': 'US',
                         'bg phonetic': 'BG'
                     }),
-                widget.TextBox(text='|'),
+                widget.TextBox(fontsize=font_size, text='|'),
                 
-                widget.TextBox(text="layout: ", foreground="cc7000"),
-                widget.CurrentLayout(foreground="cc7000"),
+                widget.TextBox(fontsize=font_size, text="layout: ", foreground="cc7000"),
+                widget.CurrentLayout(fontsize=font_size, foreground="cc7000"),
             ],
             19,
         ),
@@ -147,7 +147,7 @@ mouse = [
          start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(),
          start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
+    Click([mod], "Button2", lazy.window.toggle_fullscreen())
 ]
 
 dgroups_key_binder = None

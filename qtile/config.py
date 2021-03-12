@@ -1,6 +1,7 @@
 import os
 import re
 import subprocess
+from libqtile import qtile
 from libqtile.config import Key, Screen, Group, Drag, Click
 from libqtile.lazy import lazy
 from libqtile import layout, bar, widget, hook
@@ -16,7 +17,7 @@ keys = [
 
     # Keybinds for basic desktop management
     Key([mod], "c", lazy.window.kill()),
-    Key([mod], "space", lazy.next_layout()),
+    Key([mod], "Tab", lazy.next_layout()),
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_up()),
@@ -24,13 +25,13 @@ keys = [
     Key([mod], "h", lazy.layout.grow()),
     Key([mod], "l", lazy.layout.shrink()),
     Key([mod, "shift"], "q", lazy.shutdown()),
+    Key([mod], "space", lazy.widget["keyboardlayout"].next_keyboard()),
 
 
     # Keybinds for opening programs
     Key([mod], "Return", lazy.spawn("alacritty")),
     Key([mod], "b", lazy.spawn("alacritty -e bashtop")),
     Key([mod], "r", lazy.spawn("dmenu_run")),
-    Key([mod], "x", lazy.spawn("flameshot gui")),
 
     # Switch between groups
     Key([mod], "1", lazy.group["dev"].toscreen()),
@@ -38,7 +39,7 @@ keys = [
     Key([mod], "2", lazy.group["www"].toscreen()),
     Key([mod, "shift"], "2", lazy.window.togroup("www")),
     Key([mod], "3", lazy.group["sy"].toscreen()),
-    Key([mod, "shift"], "3", lazy.window.togroup("SY")),
+    Key([mod, "shift"], "3", lazy.window.togroup("sy")),
     Key([mod], "4", lazy.group["fm"].toscreen()),
     Key([mod, "shift"], "4", lazy.window.togroup("fm")),
     Key([mod], "5", lazy.group["misc"].toscreen()),
@@ -57,8 +58,7 @@ groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 layouts = [
     layout.MonadTall(margin=6, border_focus="cc7000"),
-    layout.Max(),
-    layout.Floating(margin=6)
+    layout.Max()
 ]
 
 widget_defaults = dict(
@@ -72,35 +72,33 @@ screens = [
     Screen(
         top=bar.Bar(
             [
+                widget.Sep(padding = 6, linewidth = 0),
+                widget.Image(filename='~/.config/qtile/python.png', scale='False', mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e code /home/nazgo/.config/qtile')}),
+                widget.Sep(padding = 6, linewidth = 0),
+
                 widget.GroupBox(rounded=False, highlight_method="block", active="ffdab9", inactive="cc7000", padding=4, fontsize=12),
                 widget.Prompt(),
-                widget.TextBox(fontsize=font_size, text="[", foreground="cc7000"),
-                widget.WindowName(fontsize=font_size, foreground="cc7000", width=bar.CALCULATED),
-                widget.TextBox(fontsize=font_size, text="]", foreground="cc7000"),
-                widget.TextBox(fontsize=font_size, width=bar.STRETCH),
+                
+                widget.WindowName(fontsize=font_size, foreground="cc7000", format="[focused] [ {state}{name} ]"),
 
                 widget.Systray(),
-                widget.TextBox(fontsize=font_size, text='|'),
 
                 widget.TextBox(fontsize=font_size, text="volume: ", foreground="cc7000"),
                 widget.Volume(fontsize=font_size, foreground="cc7000"),
-                widget.TextBox(fontsize=font_size, text='|'),
 
                 widget.Clock(fontsize=font_size, format = "%a, %b %d [ %H:%M ]", foreground="cc7000"),
-                widget.TextBox(fontsize=font_size, text='|'),
 
-                widget.KeyboardLayout(fontsize=font_size, foreground="cc7000", 
+                widget.KeyboardLayout(fontsize=font_size, foreground="cc7000",
                     configured_keyboards=['us', 'bg phonetic'],
                     display_map={
                         'us': 'US',
                         'bg phonetic': 'BG'
                     }),
-                widget.TextBox(fontsize=font_size, text='|'),
-                
+
                 widget.TextBox(fontsize=font_size, text="layout: ", foreground="cc7000"),
                 widget.CurrentLayout(fontsize=font_size, foreground="cc7000"),
             ],
-            19,
+            20,
         ),
     ),
 ]

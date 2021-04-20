@@ -1,7 +1,6 @@
 set colorcolumn=150
 set expandtab
 set exrc
-set guicursor=
 set hidden
 set incsearch
 set nobackup
@@ -18,7 +17,6 @@ set smartcase
 set smartindent
 set tabstop=4 softtabstop=4
 set termguicolors
-set undodir=~./.vim/undodir
 set encoding=UTF-8
 set undofile
 
@@ -61,8 +59,10 @@ let g:buffet_left_trunc_icon = "\uf0a8"
 let g:buffet_right_trunc_icon = "\uf0a9"
 
 let mapleader = " "
-nnoremap <leader>fs :Files
+nnoremap <leader>w :bd<CR>
 nnoremap \ :NERDTreeToggle<CR>
+nnoremap <leader>l $
+nnoremap <leader>r cgn
 nnoremap <silent><c-s> :w<CR>
 nnoremap <c-a> :CocAction<CR>
 nnoremap <c-i> :bn<CR>

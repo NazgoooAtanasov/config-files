@@ -32,11 +32,11 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'gruvbox-community/gruvbox'
-Plug 'gosukiwi/vim-atom-dark'
 Plug 'preservim/nerdtree'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'airblade/vim-gitgutter'
@@ -46,6 +46,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bagrat/vim-buffet'
+Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
 colorscheme gruvbox
@@ -68,3 +69,63 @@ nnoremap <c-a> :CocAction<CR>
 nnoremap <c-i> :bn<CR>
 nnoremap <c-p> :Telescope find_files<CR>
 nnoremap <c-w> :bd<CR>
+
+lua << EOF
+require'lspinstall'.setup() -- important
+require'lspconfig'.tsserver.setup{}
+
+local lsp = require'lspconfig'
+local util = require 'lspconfig/util'
+
+lsp.vuels.setup {
+    on_attach = function(client)
+        --[[
+            Internal Vetur formatting is not supported out of the box
+
+            This line below is required if you:
+                - want to format using Nvim's native `vim.lsp.buf.formatting**()`
+                - want to use Vetur's formatting config instead, e.g, settings.vetur.format {...}
+        --]]
+        client.resolved_capabilities.document_formatting = true
+        on_attach(client)
+    end,
+    capabilities = capabilities,
+    settings = {
+        vetur = {
+            completion = {
+                autoImport = true,
+                useScaffoldSnippets = true
+            },
+            format = {
+                defaultFormatter = {
+                    html = "none",
+                    js = "prettier",
+                    ts = "prettier",
+                }
+            },
+            validation = {
+                template = true,
+                script = true,
+                style = true,
+                templateProps = true,
+                interpolation = true
+            },
+            experimental = {
+                templateInterpolationService = true
+            }
+        }
+    },
+    root_dir = util.root_pattern("header.php", "package.json", "style.css", 'webpack.config.js')
+}
+
+require'telescope'.setup{
+    defaults = {
+       file_ignore_patterns = { "node_modules/*" },
+    }
+}
+
+local servers = require'lspinstall'.installed_servers()
+for _, server in pairs(servers) do
+  require'lspconfig'[server].setup{}
+end
+EOF

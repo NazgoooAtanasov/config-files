@@ -17,6 +17,8 @@ keys = [
 
     # Keybinds for basic desktop management
     Key([mod], 'c', lazy.window.kill()),
+    Key([mod], 'x', lazy.spawn('flameshot gui')),
+    Key([mod], 'z', lazy.spawn('copyq toggle')),
     Key([mod], 'Tab', lazy.next_layout()),
     Key([mod, 'control'], 'r', lazy.restart()),
     Key([mod, 'control'], 'q', lazy.shutdown()),
@@ -26,12 +28,13 @@ keys = [
     Key([mod], 'l', lazy.layout.shrink()),
     Key([mod, 'shift'], 'q', lazy.shutdown()),
     Key([mod], 'space', lazy.widget['keyboardlayout'].next_keyboard()),
-
+    Key([mod, 'shift'], 'b', lazy.hide_show_bar('all')),
 
     # Keybinds for opening programs
     Key([mod], 'Return', lazy.spawn('alacritty')),
-    Key([mod], 'b', lazy.spawn('alacritty -e bashtop')),
-    Key([mod], 'r', lazy.spawn('dmenu_run')),
+    Key([mod], 'b', lazy.spawn('brave')), # swap to the correct browser
+    Key([mod], 'r', lazy.spawn('rofi -show run')),
+    Key([mod], 's', lazy.spawn('spotify')),
 
     # Switch between groups
     Key([mod], '1', lazy.group['1'].toscreen()),
@@ -84,7 +87,7 @@ screens = [
                 ),
 
                 widget.Image(
-                    filename='~/.config/qtile/python.png', 
+                    filename='~/.config/qtile/python.png',
                     scale='False', 
                     mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e code /home/nazgo/.config/qtile')}
                 ),
@@ -114,35 +117,6 @@ screens = [
 
                 widget.Systray(
                     background='ffdab9'
-                ),
-
-                widget.TextBox(
-                    fontsize=font_size, 
-                    text='net:', 
-                ),
-
-                widget.Net(
-                    foreground=main_color,
-                    format='{down} ↓↑ {up}',
-                ),
-
-                widget.TextBox(
-                    fontsize=font_size, 
-                    text='memory:', 
-                ),
-
-                widget.Memory(
-                    foreground=main_color
-                ),
-
-                widget.TextBox(
-                    fontsize=font_size, 
-                    text='cpu:', 
-                ),
-
-                widget.CPU(
-                    format='{freq_current}GHz {load_percent}%',
-                    foreground=main_color
                 ),
 
                 widget.TextBox(
@@ -207,7 +181,7 @@ screens = [
                 ),
 
                 widget.Sep(
-                    padding = 6, 
+                    padding = 6,
                     linewidth = 0
                 ),
             ],

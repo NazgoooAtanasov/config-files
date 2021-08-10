@@ -1,3 +1,4 @@
+set spell spelllang=en_us
 set colorcolumn=150
 set expandtab
 set exrc
@@ -30,6 +31,7 @@ if exists('+termguicolors')
 endif
 
 call plug#begin('~/.vim/plugged')
+Plug 'bfrg/vim-cpp-modern'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
@@ -47,6 +49,7 @@ Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bagrat/vim-buffet'
 Plug 'neovim/nvim-lspconfig'
+Plug 'itchyny/vim-gitbranch'
 call plug#end()
 
 colorscheme gruvbox
@@ -59,6 +62,18 @@ let g:buffet_tab_icon = "\uf00a"
 let g:buffet_left_trunc_icon = "\uf0a8"
 let g:buffet_right_trunc_icon = "\uf0a9"
 
+
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+
 let mapleader = " "
 nnoremap <leader>w :bd<CR>
 nnoremap \ :NERDTreeToggle<CR>
@@ -68,7 +83,10 @@ nnoremap <silent><c-s> :w<CR>
 nnoremap <c-a> :CocAction<CR>
 nnoremap <c-i> :bn<CR>
 nnoremap <c-p> :Telescope find_files<CR>
-nnoremap <c-w> :bd<CR>
+nnoremap <c-o> :Telescope live_grep<CR>
+nnoremap <leader>b :Telescope buffers<CR>
+nnoremap <leader>c *<C-o>cgn
+
 
 lua << EOF
 require'lspinstall'.setup() -- important

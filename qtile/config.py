@@ -12,6 +12,7 @@ mod = 'mod4'
 
 keys = [
     # Switch between windows in current stack pane
+    Key([mod], 'period', lazy.next_screen()),
     Key([mod], 'k', lazy.layout.down()),
     Key([mod], 'j', lazy.layout.up()),
 
@@ -32,7 +33,7 @@ keys = [
 
     # Keybinds for opening programs
     Key([mod], 'Return', lazy.spawn('alacritty')),
-    Key([mod], 'b', lazy.spawn('brave')), # swap to the correct browser
+    Key([mod], 'b', lazy.spawn('chromium')), # swap to the correct browser
     Key([mod], 'r', lazy.spawn('rofi -show run')),
     Key([mod], 's', lazy.spawn('spotify')),
 
@@ -46,18 +47,31 @@ keys = [
     Key([mod], '4', lazy.group['4'].toscreen()),
     Key([mod, 'shift'], '4', lazy.window.togroup('4')),
     Key([mod], '5', lazy.group['5'].toscreen()),
-    Key([mod, 'shift'], '5', lazy.window.togroup('5')),
+    Key([mod, 'shift'], '5', lazy.window.togroup('5'))
 ]
 
 group_names = [
-        ('1', {'layout': 'monadtall'}),
-        ('2', {'layout': 'monadtall'}),
-        ('3', {'layout': 'monadtall'}),
-        ('4', {'layout': 'monadtall'}),
-        ('5', {'layout': 'monadtall'}),
-    ]
+    ('1', {'layout': 'monadtall'}),
+    ('2', {'layout': 'monadtall'}),
+    ('3', {'layout': 'monadtall'}),
+    ('4', {'layout': 'monadtall'}),
+    ('5', {'layout': 'monadtall'}),
+]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
+
+# The layout of the groups for laptop config
+# groups = []
+# 
+# for s, i in [(0, "1"), (0, "2"), (0, "3"), (1, "4"), (1, "5")]:
+#     groups.append(Group(i))
+#     keys.append(
+#         Key([mod], i, lazy.group[i].toscreen(s, toggle=False), lazy.to_screen(s)
+#         )
+#     )
+#     keys.append(
+#         Key([mod, "shift"], i, lazy.window.togroup(i))
+#     )
 
 main_color='cc7000'
 
@@ -78,6 +92,49 @@ extension_defaults = widget_defaults.copy()
 
 
 screens = [
+# The second screen for the laptop layout
+#    Screen(
+#        top=bar.Bar(
+#            [
+#                widget.GroupBox(
+#                    rounded=False, 
+#                    highlight_method='block', 
+#                    active='ffdab9', 
+#                    inactive=main_color,
+#                    padding=4, 
+#                    fontsize=12
+#                ),
+#
+#                widget.WindowName(
+#                    fontsize=font_size, 
+#                    background='ffdab9',
+#                    foreground='000000',
+#                    format='[focused] [ {state}{name} ]',
+#                ),
+#
+#                widget.KeyboardLayout(
+#                    fontsize=font_size,
+#                    foreground=main_color,
+#                    configured_keyboards=['us', 'bg phonetic'],
+#                    display_map={
+#                        'us': 'US',
+#                        'bg phonetic': 'BG'
+#                    }
+#                ),
+#
+#                widget.TextBox(
+#                    fontsize=font_size, 
+#                    text='[]=:', 
+#                ),
+#
+#                widget.CurrentLayout(
+#                    fontsize=font_size, 
+#                    foreground=main_color
+#                ),
+#            ],
+#            20,
+#        ),
+#    ),
     Screen(
         top=bar.Bar(
             [
@@ -118,6 +175,17 @@ screens = [
                 widget.Systray(
                     background='ffdab9'
                 ),
+
+# for laptop only
+#                widget.TextBox(
+#                    fontsize=font_size,
+#                    text='battery: ',
+#                    foreground=main_color
+#                ),
+#
+#                widget.Battery(
+#                    format='{char} {percent:2.0%}'
+#                ),
 
                 widget.TextBox(
                     fontsize=font_size, 

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Basically add whatever commands you want to execute on login
+project_directory="PUT DIR HERE"
 
 tmux start-server
-tmux new-session -d -n "PLACEHOLDER"
-tmux neww -n "PLACEHOLDER"
-tmux neww -n "PLACEHOLDER"
+tmux new-session -d -n "NAMEOFWINDOW" -c $project_directory
+tmux neww -n "NAMEOFWINDOW" -c $project_directory
+tmux neww -n "NAMEOFWINDOW" -c $project_directory

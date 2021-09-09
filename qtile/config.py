@@ -1,14 +1,51 @@
+# COMPLETELY RESTRUCTURE THE ENTIRE CONFIG FILE PLEASE.
+
 import os
 import re
 import subprocess
 from libqtile import qtile
-from libqtile.config import Key, Screen, Group, Drag, Click
+from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.lazy import lazy
 from libqtile import layout, bar, widget, hook
+from libqtile.log_utils import logger
 
 from typing import List  # noqa: F401
 
 mod = 'mod4'
+
+current_group = '1'
+
+# Auto assign windows to groups on auto-start -- WIP
+
+auto_assign_windows = {
+    'slack': '3',
+    'skype': '4',
+    'spotify': '4',
+    'brave': '5',
+    'copyq': current_group
+}
+
+auto_assign_windows_keys = auto_assign_windows.keys()
+
+@hook.subscribe.client_new
+def window_opened(window):
+    if window and window.name:
+        window_name = window.name.lower()
+
+        for auto_assign_window in auto_assign_windows_keys:
+            is_contained = auto_assign_window in window_name
+
+            if is_contained:
+                group_number = auto_assign_windows[auto_assign_window]
+
+                window.togroup(group_number)
+                break
+
+# Auto assign windows to groups on auto-start
+
+def update_current_group(qtile):
+    current_group = qtile.current_group.name
+    auto_assign_windows['copyq'] = current_group
 
 keys = [
     # Switch between windows in current stack pane
@@ -19,7 +56,7 @@ keys = [
     # Keybinds for basic desktop management
     Key([mod], 'c', lazy.window.kill()),
     Key([mod], 'x', lazy.spawn('flameshot gui')),
-    Key([mod], 'z', lazy.spawn('copyq toggle')),
+    Key([mod], 'z', lazy.spawn('copyq toggle'), lazy.window.togroup('1')),
     Key([mod], 'Tab', lazy.next_layout()),
     Key([mod, 'control'], 'r', lazy.restart()),
     Key([mod, 'control'], 'q', lazy.shutdown()),
@@ -33,230 +70,252 @@ keys = [
 
     # Keybinds for opening programs
     Key([mod], 'Return', lazy.spawn('alacritty')),
-    Key([mod], 'b', lazy.spawn('chromium')), # swap to the correct browser
+    Key([mod, 'shift'], 's', lazy.spawn('slack')),
     Key([mod], 'r', lazy.spawn('rofi -show run')),
+    Key([mod], 'b', lazy.spawn('chromium')), # swap to the correct browser
     Key([mod], 's', lazy.spawn('spotify')),
-
-    # Switch between groups
-    Key([mod], '1', lazy.group['1'].toscreen()),
-    Key([mod, 'shift'], '1', lazy.window.togroup('1')),
-    Key([mod], '2', lazy.group['2'].toscreen()),
-    Key([mod, 'shift'], '2', lazy.window.togroup('2')),
-    Key([mod], '3', lazy.group['3'].toscreen()),
-    Key([mod, 'shift'], '3', lazy.window.togroup('3')),
-    Key([mod], '4', lazy.group['4'].toscreen()),
-    Key([mod, 'shift'], '4', lazy.window.togroup('4')),
-    Key([mod], '5', lazy.group['5'].toscreen()),
-    Key([mod, 'shift'], '5', lazy.window.togroup('5'))
 ]
 
-group_names = [
-    ('1', {'layout': 'monadtall'}),
-    ('2', {'layout': 'monadtall'}),
-    ('3', {'layout': 'monadtall'}),
-    ('4', {'layout': 'monadtall'}),
-    ('5', {'layout': 'monadtall'}),
+is_two_monitors = False
+groups = []
+
+groups_sample_one_monitor = [
+    (0, '1', None),
+    (0, '2', None),
+    (0, '3', ['slack', 'slack']),
+    (0, '4', ['skype', 'spotify']),
+    (0, '5', ['brave'])
 ]
 
-groups = [Group(name, **kwargs) for name, kwargs in group_names]
+groups_sample_two_monitors = [
+    (0, '1', None),
+    (0, '2', None),
+    (0, '3', ['slack', 'slack']),
+    (1, '4', ['skype', 'spotify']),
+    (1, '5', ['brave'])
+]
 
-# The layout of the groups for laptop config
-# groups = []
-# 
-# for s, i in [(0, "1"), (0, "2"), (0, "3"), (1, "4"), (1, "5")]:
-#     groups.append(Group(i))
-#     keys.append(
-#         Key([mod], i, lazy.group[i].toscreen(s, toggle=False), lazy.to_screen(s)
-#         )
-#     )
-#     keys.append(
-#         Key([mod, "shift"], i, lazy.window.togroup(i))
-#     )
+def append_groups_keys(array):
+    for monitor_index, group_name, spawn in array:
+        group_object = Group(name = group_name)
 
-main_color='cc7000'
+        if spawn is not None:
+            group_object.spawn = spawn
+
+        groups.append(group_object)
+
+        keys.append(
+            Key(
+                [mod],
+                group_name,
+                lazy.group[group_name].toscreen(
+                    monitor_index,
+                    toggle=False
+                ),
+                lazy.to_screen(monitor_index))
+        )
+
+        keys.append(
+            Key([mod, "shift"], group_name, lazy.window.togroup(group_name))
+        )
+
+if is_two_monitors:
+    append_groups_keys(groups_sample_two_monitors)
+else:
+    append_groups_keys(groups_sample_one_monitor)
+
+main_color = 'cc7000'
+font_size = 14
 
 layouts = [
-    layout.MonadTall(margin=7, border_focus=main_color),
+    layout.MonadTall(margin = 7, border_focus = main_color),
     layout.Max()
 ]
 
-font_size=14
-
 widget_defaults = dict(
-    font='mononoki Nerd Font Bold',
-    fontsize=font_size,
-    padding=3,
+    font = 'mononoki Nerd Font Bold',
+    fontsize = font_size,
+    padding = 3,
 )
 
 extension_defaults = widget_defaults.copy()
 
+def get_lamda_callbacks(lamda_func_trigger, lamda_func, params):
+    if lamda_func_trigger and lamda_func and params:
+        return {
+            lamda_func_trigger: lambda: lamda_func(params)
+        }
+
+    return {}
+
+def put_separator():
+    separator = widget.Sep(
+        padding = 6,
+        linewidth = 0
+    )
+
+    return separator
+
+def put_text_box(text, lamda_func_trigger = None, lamda_func = None, params = None):
+    text_box = widget.TextBox(
+        text = text,
+        mouse_callbacks = get_lamda_callbacks(lamda_func_trigger, lamda_func, params)
+    )
+
+    return text_box
+
+def put_image(path, lamda_func_trigger = None, lamda_func = None, params = None):
+    image = widget.Image(
+        filename = path,
+        scale = 'False',
+        mouse_callbacks = get_lamda_callbacks(lamda_func_trigger, lamda_func, params)
+    )
+
+    return image
+
+def put_keyboard_indicator():
+    keyboard = widget.KeyboardLayout(
+        foreground = main_color,
+        configured_keyboards = ['us', 'bg phonetic'],
+        display_map = {
+            'us': 'US',
+            'bg phonetic': 'BG'
+        }
+    )
+
+    return keyboard
+
+def put_clock():
+    clock = widget.Clock(
+        format = '%a, %b %d [ %H:%M ]',
+        foreground = main_color
+    )
+
+    return clock
+
+def put_current_layout():
+    layout = widget.CurrentLayout(
+        foreground = main_color
+    )
+
+    return layout
+
+def put_current_window_name():
+    window_name = widget.WindowName(
+        fontsize = font_size,
+        background = 'ffdab9',
+        foreground = '000000',
+        format = '[focused] [ {state}{name} ]',
+    )
+
+    return window_name
+
+def put_group_layout():
+    group_layout = widget.GroupBox(
+        rounded = False,
+        highlight_method = 'block',
+        active = 'ffdab9',
+        inactive = main_color,
+        padding = 4,
+        fontsize = 12
+    )
+
+    return group_layout
+
+def get_widgets(start_range = None, end_range = None):
+    widgets_list = [
+        put_separator(),
+
+        put_image(
+            '~/.config/qtile/python.png',
+            'Button1', qtile.cmd_spawn,
+            'alacritty -e code /home/nazgo/.config/qtile'
+        ),
+
+        put_separator(),
+
+        put_group_layout(),
+
+        widget.Prompt(),
+
+        put_current_window_name(),
+
+        widget.Systray(
+            background='ffdab9'
+        ),
+
+        put_text_box('volume: ', 'Button1', qtile.cmd_spawn, 'alacritty -e alsamixer'),
+
+        widget.Volume(
+            foreground=main_color,
+            mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e alsamixer')}
+        ),
+
+        put_text_box('clock: '),
+
+        put_clock(),
+
+        put_text_box('kb: '),
+
+        put_keyboard_indicator(),
+
+        put_text_box('[]=:'),
+
+        put_current_layout(),
+
+        put_image(
+            '~/.config/qtile/pacman.png',
+            'Button1', qtile.cmd_spawn,
+            'alacritty -e sudo pacman -Syyu'
+        ),
+
+        widget.CheckUpdates(
+            distro='Arch',
+            display_format='{updates}',
+            colour_have_updates=main_color,
+            mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e sudo pacman -Syyu')}
+        ),
+
+        put_separator(),
+    ]
+
+    if start_range is not None and end_range is not None:
+        return widgets_list[start_range:end_range]
+
+    return widgets_list
+
 
 screens = [
-# The second screen for the laptop layout
-#    Screen(
-#        top=bar.Bar(
-#            [
-#                widget.GroupBox(
-#                    rounded=False, 
-#                    highlight_method='block', 
-#                    active='ffdab9', 
-#                    inactive=main_color,
-#                    padding=4, 
-#                    fontsize=12
-#                ),
-#
-#                widget.WindowName(
-#                    fontsize=font_size, 
-#                    background='ffdab9',
-#                    foreground='000000',
-#                    format='[focused] [ {state}{name} ]',
-#                ),
-#
-#                widget.KeyboardLayout(
-#                    fontsize=font_size,
-#                    foreground=main_color,
-#                    configured_keyboards=['us', 'bg phonetic'],
-#                    display_map={
-#                        'us': 'US',
-#                        'bg phonetic': 'BG'
-#                    }
-#                ),
-#
-#                widget.TextBox(
-#                    fontsize=font_size, 
-#                    text='[]=:', 
-#                ),
-#
-#                widget.CurrentLayout(
-#                    fontsize=font_size, 
-#                    foreground=main_color
-#                ),
-#            ],
-#            20,
-#        ),
-#    ),
     Screen(
         top=bar.Bar(
-            [
-                widget.Sep(
-                    padding = 6, 
-                    linewidth = 0,
-                ),
-
-                widget.Image(
-                    filename='~/.config/qtile/python.png',
-                    scale='False', 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e code /home/nazgo/.config/qtile')}
-                ),
-
-                widget.Sep(
-                    padding = 6, 
-                    linewidth = 0
-                ),
-
-                widget.GroupBox(
-                    rounded=False, 
-                    highlight_method='block', 
-                    active='ffdab9', 
-                    inactive=main_color,
-                    padding=4, 
-                    fontsize=12
-                ),
-
-                widget.Prompt(),
-                
-                widget.WindowName(
-                    fontsize=font_size, 
-                    background='ffdab9',
-                    foreground='000000',
-                    format='[focused] [ {state}{name} ]',
-                ),
-
-                widget.Systray(
-                    background='ffdab9'
-                ),
-
-# for laptop only
-#                widget.TextBox(
-#                    fontsize=font_size,
-#                    text='battery: ',
-#                    foreground=main_color
-#                ),
-#
-#                widget.Battery(
-#                    format='{char} {percent:2.0%}'
-#                ),
-
-                widget.TextBox(
-                    fontsize=font_size, 
-                    text='volume: ', 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e alsamixer')}
-                ),
-                
-                widget.Volume(
-                    fontsize=font_size, 
-                    foreground=main_color, 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e alsamixer')}
-                ),
-
-                widget.TextBox(
-                    fontsize=font_size, 
-                    text='clock:', 
-                ),
-
-                widget.Clock(
-                    fontsize=font_size, 
-                    format = '%a, %b %d [ %H:%M ]', 
-                    foreground=main_color
-                ),
-
-                widget.TextBox(
-                    fontsize=font_size, 
-                    text='kb:', 
-                ),
-
-                widget.KeyboardLayout(
-                    fontsize=font_size,
-                    foreground=main_color,
-                    configured_keyboards=['us', 'bg phonetic'],
-                    display_map={
-                        'us': 'US',
-                        'bg phonetic': 'BG'
-                    }
-                ),
-
-                widget.TextBox(
-                    fontsize=font_size, 
-                    text='[]=:', 
-                ),
-
-                widget.CurrentLayout(
-                    fontsize=font_size, 
-                    foreground=main_color
-                ),
-
-                widget.Image(
-                    filename='~/.config/qtile/pacman.png', 
-                    scale='False', 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e sudo pacman -Syyu')}
-                ),
-
-                widget.CheckUpdates(
-                    distro='Arch',
-                    display_format='{updates}',
-                    colour_have_updates=main_color,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e sudo pacman -Syyu')}
-                ),
-
-                widget.Sep(
-                    padding = 6,
-                    linewidth = 0
-                ),
-            ],
+            # Here we want all of the widgets
+            get_widgets(),
             20,
         ),
     ),
 ]
+
+# When there are two monitors insert the second screen object
+# to the list of screens
+if is_two_monitors:
+    screen_two = Screen(
+        top=bar.Bar(
+            [
+                put_group_layout(),
+
+                put_current_window_name(),
+
+                put_keyboard_indicator(),
+
+                put_text_box('[]=:'),
+
+                put_current_layout(),
+            ],
+            20,
+        ),
+    )
+
+    screens.insert(0, screen_two)
 
 # Drag floating layouts.
 mouse = [
@@ -298,6 +357,7 @@ focus_on_window_activation = 'smart'
 def autostart():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the

@@ -31,28 +31,50 @@ if exists('+termguicolors')
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'bfrg/vim-cpp-modern'
+" elixir BS
+Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+Plug 'elixir-editors/vim-elixir'
+Plug 'tpope/vim-endwise'
+
+" themes
+Plug 'dracula/vim'
+Plug 'wadackel/vim-dogrun'
+Plug 'gruvbox-community/gruvbox'
+
+" misc
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'itchyny/lightline.vim'
+Plug 'xiyaowong/nvim-transparent'
+
+" C/C++
+Plug 'bfrg/vim-cpp-modern'
+
+" the good stuff
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'gruvbox-community/gruvbox'
 Plug 'preservim/nerdtree'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'airblade/vim-gitgutter'
-Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'pangloss/vim-javascript'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'bagrat/vim-buffet'
-Plug 'neovim/nvim-lspconfig'
 Plug 'itchyny/vim-gitbranch'
+Plug 'tpope/vim-commentary'
+Plug 'neovim/nvim-lspconfig'
+Plug 'pangloss/vim-javascript'
+
+" for telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+
+Plug 'bagrat/vim-buffet'
 call plug#end()
 
-colorscheme gruvbox
+colorscheme dogrun
+
+let g:ale_fixers = { 'elixir': ['mix_format'] }
+let g:python3_host_prog = '/usr/bin/python3'
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
@@ -62,6 +84,7 @@ let g:buffet_tab_icon = "\uf00a"
 let g:buffet_left_trunc_icon = "\uf0a8"
 let g:buffet_right_trunc_icon = "\uf0a9"
 
+let g:mkdp_browser = 'brave'
 
 let g:lightline = {
       \ 'active': {
@@ -141,6 +164,10 @@ require'telescope'.setup{
        file_ignore_patterns = { "node_modules/*" },
     }
 }
+
+require'transparent'.setup({
+  enable = true,
+})
 
 local servers = require'lspinstall'.installed_servers()
 for _, server in pairs(servers) do

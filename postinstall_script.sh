@@ -1,5 +1,11 @@
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd ..
+
 programs="alacritty picom tmux npm nodejs neovim rofi pcmanfm"
 sudo pacman -S $programs
+yay -S lain --noconfirm
 
 configs=($(find "$(pwd)" -maxdepth 1 -type d ! -path "*/startup_scripts" ! -path "*/.git" ! -path "$(pwd)"))
 

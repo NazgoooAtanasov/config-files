@@ -1,46 +1,41 @@
 # oh-my-zsh is required!
 
-# Path to your oh-my-zsh installation.
 export ZSH="/home/nazgo/.oh-my-zsh"
 
 ZSH_THEME="sorin"
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
 export EDITOR="nvim"
 export TERM=xterm-256color
 
+alias tmuxd="tmux detach"
 alias update="sudo pacman -Syu"
 alias search="pacman -Ss"
 alias install="sudo pacman -S"
 alias remove="sudo pacman -Rcns"
 alias installed="pacman -Q | less"
-alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
-alias fpDevSsh="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/fpDev'"
-alias simob="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/simoB'"
-alias ai="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/ai'"
-alias githardreset="git fetch && git reset --hard @{u}"
+
 alias bd="cd ~/_ForkPoint/bd-ecommerce && nvm use"
 alias cl="cd ~/_ForkPoint/cloudstart && nvm use 10.19"
 alias ds="cd ~/_ForkPoint/salesforce"
 alias ac="cd ~/_ForkPoint/acne && nvm use"
 alias acl="cd ~/_ForkPoint/acne-legacy"
 alias acc="code ~/_ForkPoint/acne"
+
 alias ls="exa -la"
 alias vim="nvim"
-alias webdav="cd /home/nazgo/_ForkPoint/WebDAV_Server_Engine_NodeJS_1_1_210/FileSystem && node index.js"
 eval $(thefuck --alias fak)
 
-# Git aliasses
+# Git shit
+alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
+alias fpDevSsh="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/fpDev'"
+alias simob="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/simoB'"
+alias ai="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/ai'"
+alias githardreset="git fetch && git reset --hard @{u}"
+alias gitd="git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 -o -t git add"
 alias 'git r'="git rebase -i"
 
 [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"

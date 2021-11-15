@@ -74,6 +74,8 @@
 (add-to-list 'auto-mode-alist '("\\.isml?\\'" . web-mode))
 (add-hook 'web-mode-hook  'emmet-mode)
 
+(add-hook 'rjsx-mode-hook 'lsp)
+
 (setq web-mode-enable-current-column-highlight t)
 (setq web-mode-enable-current-element-highlight t)
 ;; HTML/CSS CONFIGS

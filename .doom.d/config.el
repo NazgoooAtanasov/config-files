@@ -50,6 +50,21 @@
 ;; they are implemented.
 
 (setq confirm-kill-emacs nil)
+(setq
+ projectile-project-search-path '("~/_Projects")
+ projectile-indexing-method 'native)
+
+;; HTML/CSS CONFIGS
+;; DEPS ON : web-mode emmet-mode company-web
+(require 'web-mode)
+(require 'emmet-mode)
+
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.isml?\\'" . web-mode))
+
+(setq web-mode-enable-current-column-highlight t)
+(setq web-mode-enable-current-element-highlight t)
+;; HTML/CSS CONFIGS
 
 (use-package lsp-mode
   :commands lsp)
@@ -65,24 +80,14 @@
   (add-hook 'vue-mode-hook #'lsp))
 ;; VUE CONFIGS
 
+(use-package svelte-mode
+  :mode "\\.svelte\\'"
+  :config
+  (add-hook 'svelte-mode-hook #'lsp))
+
 (add-hook 'rjsx-mode-hook 'lsp)
-
-;; HTML/CSS CONFIGS
-;; DEPS ON : web-mode emmet-mode company-web
-(require 'web-mode)
-(require 'emmet-mode)
-
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.isml?\\'" . web-mode))
+(add-hook 'tide-mode-hook 'lsp)
 (add-hook 'web-mode-hook  'emmet-mode)
-
-(setq web-mode-enable-current-column-highlight t)
-(setq web-mode-enable-current-element-highlight t)
-;; HTML/CSS CONFIGS
-
-(setq
- projectile-project-search-path '("~/_Projects")
- projectile-indexing-method 'native)
 
 (map! :leader
       :desc "Save file"

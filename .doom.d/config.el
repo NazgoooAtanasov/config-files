@@ -65,6 +65,8 @@
   (add-hook 'vue-mode-hook #'lsp))
 ;; VUE CONFIGS
 
+(add-hook 'rjsx-mode-hook 'lsp)
+
 ;; HTML/CSS CONFIGS
 ;; DEPS ON : web-mode emmet-mode company-web
 (require 'web-mode)
@@ -73,8 +75,6 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.isml?\\'" . web-mode))
 (add-hook 'web-mode-hook  'emmet-mode)
-
-(add-hook 'rjsx-mode-hook 'lsp)
 
 (setq web-mode-enable-current-column-highlight t)
 (setq web-mode-enable-current-element-highlight t)

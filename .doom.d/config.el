@@ -92,3 +92,7 @@
 (map! :leader
       :desc "Save file"
       "s" #'save-buffer)
+
+(map! :leader
+      :desc "multucursor"
+      "d" #'mc/mark-next-like-this)

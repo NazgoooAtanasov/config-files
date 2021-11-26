@@ -48,3 +48,10 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(package! lsp-mode)
+(package! company-web)
+(package! web-mode)
+(package! emmet-mode)
+(package! vue-mode)
+(package! svelte-mode)

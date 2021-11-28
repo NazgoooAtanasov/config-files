@@ -96,3 +96,7 @@
 (map! :leader
       :desc "multucursor"
       "d" #'mc/mark-next-like-this)
+
+(map! :leader
+      :desc "vterm"
+      "v" #'projectile-run-vterm)

@@ -42,6 +42,7 @@ alias v="nvim"
 alias githardreset="git fetch && git reset --hard @{u}"
 
 alias ai="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/ai'"
+alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
 
 alias tmuxd="tmux detach"
 

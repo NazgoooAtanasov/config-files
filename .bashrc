@@ -14,6 +14,10 @@ _BLUE=$(tput setaf 4)
 _GREEN=$(tput setaf 2)
 _RED=$(tput setaf 1)
 _RESET=$(tput sgr0)
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWCOLORHINTS=1
 PS1='[${_BLUE}\u@\h${_RESET} ${_GREEN}\W${_RESET} ${_RED}$(__git_ps1 "git (%s)")${_RESET}]\$ '
 
 PATH=$PATH:/home/nazgo/.dotnet/tools:/home/nazgo/go/bin

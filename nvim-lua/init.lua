@@ -19,6 +19,7 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter'
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
+  use 'jose-elias-alvarez/null-ls.nvim'
 
   -- themes
   use 'morhetz/gruvbox'
@@ -40,6 +41,9 @@ require('packer').startup(function()
   use 'hrsh7th/nvim-cmp'
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
+
+  -- ale lint
+  use 'dense-analysis/ale'
 
   -- Telescope
   -- use {
@@ -68,8 +72,8 @@ configs.setup {
     enable = true, -- default is disabled anyways
   }
 }
---vim.opt.foldmethod = 'expr'
---vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
@@ -194,3 +198,11 @@ require('lualine').setup {
     component_separators = ''
   }
 }
+
+-- ale lint
+vim.cmd([[
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}]])
+
+vim.cmd([[let g:ale_fix_on_save = 1]])

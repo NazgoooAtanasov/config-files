@@ -13,6 +13,7 @@ vim.o.incsearch = true
 vim.bo.autoread = true
 vim.o.hlsearch = false
 vim.o.autoread = true
+vim.wo.foldnestmax = 2
 
 require('packer').startup(function()
   -- treesitter and lsp
@@ -28,10 +29,10 @@ require('packer').startup(function()
   use 'jiangmiao/auto-pairs'
   use 'airblade/vim-gitgutter'
   use 'junegunn/fzf.vim'
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
   use 'tpope/vim-commentary'
   use 'farmergreg/vim-lastplace'
+  use 'tpope/vim-fugitive'
 
   -- completion
   use 'hrsh7th/cmp-nvim-lsp'
@@ -72,8 +73,8 @@ configs.setup {
     enable = true, -- default is disabled anyways
   }
 }
--- vim.opt.foldmethod = 'expr'
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
@@ -115,7 +116,7 @@ nkeymap('<c-k>', ':lua vim.lsp.buf.signature_help()<cr>')
 nkeymap('<leader><leader>', ':GFiles<cr>')
 nkeymap('<leader>/', ':Ag<cr>')
 nkeymap('<leader>,', ':Buffers<cr>')
-nkeymap('<leader>gg', ':Neogit<cr>')
+nkeymap('<leader>gg', ':G<cr>')
 nkeymap('<leader>op', ':Explore<cr>')
 nkeymap('<leader>bk', ':bd<cr>')
 nkeymap('<leader>bn', ':bn<cr>')
@@ -171,9 +172,6 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 require('lspconfig')['tsserver'].setup {
   capabilities = capabilities
 }
-
-local neogit = require('neogit')
-neogit.setup {}
 
 -- emet config
 local lspconfig = require'lspconfig'

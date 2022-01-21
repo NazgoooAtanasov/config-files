@@ -24,6 +24,7 @@ require('packer').startup(function()
 
   -- themes
   use 'morhetz/gruvbox'
+  use 'dracula/vim'
 
   -- goodies
   use 'jiangmiao/auto-pairs'
@@ -122,6 +123,7 @@ nkeymap('<leader>bk', ':bd<cr>')
 nkeymap('<leader>bn', ':bn<cr>')
 nkeymap('<leader>vs', ':vs<cr>')
 nkeymap('<leader>s', ':split<cr>')
+nkeymap('<leader>w', ':only<cr>')
 nkeymap('<c-s>', ':w<cr>')
 
 local cmp = require'cmp'

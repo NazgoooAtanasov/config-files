@@ -154,6 +154,11 @@ _G.packer_plugins = {
     path = "/home/nazgo/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
+  vim = {
+    loaded = true,
+    path = "/home/nazgo/.local/share/nvim/site/pack/packer/start/vim",
+    url = "https://github.com/dracula/vim"
+  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/nazgo/.local/share/nvim/site/pack/packer/start/vim-commentary",

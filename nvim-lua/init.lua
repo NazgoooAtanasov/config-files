@@ -34,6 +34,7 @@ require('packer').startup(function()
   use 'tpope/vim-commentary'
   use 'farmergreg/vim-lastplace'
   use 'tpope/vim-fugitive'
+  use 'voldikss/vim-floaterm'
 
   -- completion
   use 'hrsh7th/cmp-nvim-lsp'
@@ -66,7 +67,17 @@ vim.cmd([[autocmd FileChangedShellPost *
 
 local configs = require'nvim-treesitter.configs'
 configs.setup {
-  ensure_installed = "maintained", -- Only use parsers that are maintained
+    ensure_installed = {
+        'lua',
+        'typescript',
+        'javascript',
+        'html',
+        'css',
+        'scss',
+        'svelte',
+        'vue',
+        'c'
+    }, -- Only use parsers that are maintained
   highlight = { -- enable highlighting
     enable = true,
   },
@@ -124,6 +135,7 @@ nkeymap('<leader>bn', ':bn<cr>')
 nkeymap('<leader>vs', ':vs<cr>')
 nkeymap('<leader>s', ':split<cr>')
 nkeymap('<leader>w', ':only<cr>')
+nkeymap('<leader>tt', ':FloatermNew<cr>')
 nkeymap('<c-s>', ':w<cr>')
 
 local cmp = require'cmp'

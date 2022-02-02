@@ -1,7 +1,6 @@
 -- global vim.o
 -- local window vim.wo
 -- local buffer vim.bo
-vim.wo.colorcolumn = '150'
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 -- vim.o.softtabstop = 4
@@ -23,7 +22,7 @@ require('packer').startup(function()
   use 'jose-elias-alvarez/null-ls.nvim'
 
   -- themes
-  use 'morhetz/gruvbox'
+  use 'gruvbox-community/gruvbox'
   use 'dracula/vim'
 
   -- goodies
@@ -53,6 +52,9 @@ require('packer').startup(function()
   --   'nvim-telescope/telescope.nvim',
   --   requires = { {'nvim-lua/plenary.nvim'} }
   -- }
+
+  use 'elixir-editors/vim-elixir'
+  use 'tpope/vim-endwise'
 end)
 
 vim.cmd([[colorscheme gruvbox]])
@@ -131,12 +133,16 @@ nkeymap('<leader>,', ':Buffers<cr>')
 nkeymap('<leader>gg', ':G<cr>')
 nkeymap('<leader>op', ':Explore<cr>')
 nkeymap('<leader>bk', ':bd<cr>')
+nkeymap('<leader>bd', ':%bd<cr>')
 nkeymap('<leader>bn', ':bn<cr>')
 nkeymap('<leader>vs', ':vs<cr>')
 nkeymap('<leader>s', ':split<cr>')
 nkeymap('<leader>w', ':only<cr>')
 nkeymap('<leader>tt', ':FloatermNew<cr>')
 nkeymap('<c-s>', ':w<cr>')
+
+-- cool shit
+nkeymap('<leader>nl', ':set nu!<cr>:set relativenumber!<cr>');
 
 local cmp = require'cmp'
 cmp.setup({

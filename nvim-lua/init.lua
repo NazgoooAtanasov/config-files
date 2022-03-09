@@ -14,16 +14,28 @@ vim.o.hlsearch = false
 vim.o.autoread = true
 vim.wo.foldnestmax = 2
 
-require('packer').startup(function()
+local packer = require 'packer'
+
+packer.init({
+    git = {
+        update = 'pull --progress --rebase=true'
+    }
+})
+
+packer.startup(function()
   -- treesitter and lsp
   use 'nvim-treesitter/nvim-treesitter'
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/null-ls.nvim'
+  use "onsails/lspkind-nvim"
 
   -- themes
   use 'gruvbox-community/gruvbox'
   use 'dracula/vim'
+  use {'luisiacc/gruvbox-baby', branch = 'main'}
+  use 'jsit/toast.vim'
+  use 'RRethy/nvim-base16'
 
   -- goodies
   use 'jiangmiao/auto-pairs'
@@ -43,9 +55,13 @@ require('packer').startup(function()
   use 'hrsh7th/nvim-cmp'
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
+  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
 
   -- ale lint
   use 'dense-analysis/ale'
+
+  -- markdown
+  use 'iamcco/markdown-preview.nvim'
 
   -- Telescope
   -- use {
@@ -57,7 +73,7 @@ require('packer').startup(function()
   use 'tpope/vim-endwise'
 end)
 
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme gruvbox-baby]])
 
 -- html syntax for isml files
 vim.cmd([[autocmd BufNewFile,BufRead *.isml set ft=html]])
@@ -143,7 +159,10 @@ nkeymap('<c-s>', ':w<cr>')
 
 -- cool shit
 nkeymap('<leader>nl', ':set nu!<cr>:set relativenumber!<cr>');
+nkeymap('<leader>ll', ':set background=light<cr>:colorscheme toast<cr>');
+nkeymap('<leader>bb', ':set background=dark<cr>:colorscheme gruvbox-baby<cr>');
 
+local lspkind = require 'lspkind'
 local cmp = require'cmp'
 cmp.setup({
   snippet = {
@@ -168,9 +187,29 @@ cmp.setup({
   },
   sources = {
     { name = 'nvim_lsp' },
+    { name = 'cmp_tabnine' },
     { name = 'luasnip' },
     { name = 'buffer' },
-  }
+  },
+    formatting = {
+        format = lspkind.cmp_format {
+            menu = {
+                nvim_lsp = "[lsp]",
+                cmp_tabnine = "[t9]",
+                luasnip = "[luasnip]",
+                buffer = "[buff]"
+            }
+        }
+    }
+})
+
+local tabnine = require('cmp_tabnine.config')
+tabnine:setup({
+	max_lines = 1000;
+	max_num_results = 20;
+	sort = true;
+	run_on_every_keystroke = true;
+	snippet_placeholder = '..';
 })
 
 cmp.setup.cmdline('/', {
@@ -211,7 +250,7 @@ lspconfig.emmet_ls.setup{ capabilities = capabilities; }
 -- status line
 require('lualine').setup {
   options = {
-    theme = 'gruvbox',
+    theme = 'auto',
     section_separators = '',
     component_separators = ''
   }

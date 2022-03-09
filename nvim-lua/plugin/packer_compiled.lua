@@ -119,11 +119,6 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/fzf.vim",
     url = "https://github.com/junegunn/fzf.vim"
   },
-  gruvbox = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/gruvbox",
-    url = "https://github.com/gruvbox-community/gruvbox"
-  },
   ["gruvbox-baby"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/gruvbox-baby",
@@ -184,11 +179,6 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/toast.vim",
     url = "https://github.com/jsit/toast.vim"
   },
-  vim = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/vim",
-    url = "https://github.com/dracula/vim"
-  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/vim-commentary",
@@ -232,5 +222,6 @@ if should_profile then save_profiles() end
 end)
 
 if not no_errors then
+  error_msg = error_msg:gsub('"', '\\"')
   vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
 end

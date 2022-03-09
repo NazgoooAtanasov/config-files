@@ -19,7 +19,8 @@ local packer = require 'packer'
 packer.init({
     git = {
         update = 'pull --progress --rebase=true'
-    }
+    },
+    max_jobs = 10
 })
 
 packer.startup(function()
@@ -31,8 +32,6 @@ packer.startup(function()
   use "onsails/lspkind-nvim"
 
   -- themes
-  use 'gruvbox-community/gruvbox'
-  use 'dracula/vim'
   use {'luisiacc/gruvbox-baby', branch = 'main'}
   use 'jsit/toast.vim'
   use 'RRethy/nvim-base16'
@@ -73,7 +72,7 @@ packer.startup(function()
   use 'tpope/vim-endwise'
 end)
 
-vim.cmd([[colorscheme gruvbox-baby]])
+vim.cmd([[colorscheme base16-onedark]])
 
 -- html syntax for isml files
 vim.cmd([[autocmd BufNewFile,BufRead *.isml set ft=html]])

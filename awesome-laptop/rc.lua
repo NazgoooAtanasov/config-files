@@ -73,6 +73,14 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 mytextclock = wibox.widget.textclock()
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+local cw = calendar_widget({
+    placement = "top_right"
+})
+mytextclock:connect_signal("button::press",
+    function(_, _, _, button)
+        if button == 1 then cw.toggle() end 
+    end)
 
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),

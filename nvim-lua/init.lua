@@ -36,6 +36,9 @@ packer.startup(function()
   use 'jsit/toast.vim'
   use 'RRethy/nvim-base16'
 
+  -- Transparency
+  use 'xiyaowong/nvim-transparent'
+
   -- goodies
   use 'jiangmiao/auto-pairs'
   use 'airblade/vim-gitgutter'
@@ -63,10 +66,10 @@ packer.startup(function()
   use 'iamcco/markdown-preview.nvim'
 
   -- Telescope
-  -- use {
-  --   'nvim-telescope/telescope.nvim',
-  --   requires = { {'nvim-lua/plenary.nvim'} }
-  -- }
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} }
+  }
 
   use 'elixir-editors/vim-elixir'
   use 'tpope/vim-endwise'
@@ -142,9 +145,12 @@ nkeymap('<leader>rn', ':lua vim.lsp.buf.rename()<cr>')
 nkeymap('<c-k>', ':lua vim.lsp.buf.signature_help()<cr>')
 
 -- navigation keybinds
-nkeymap('<leader><leader>', ':GFiles<cr>')
-nkeymap('<leader>/', ':Ag<cr>')
-nkeymap('<leader>,', ':Buffers<cr>')
+-- nkeymap('<leader><leader>', ':GFiles<cr>')
+nkeymap('<leader><leader>', ':lua require("telescope.builtin").find_files()<cr>')
+-- nkeymap('<leader>/', ':Ag<cr>')
+nkeymap('<leader>/', ':lua require("telescope.builtin").live_grep()<cr>')
+-- nkeymap('<leader>,', ':Buffers<cr>')
+nkeymap('<leader>,', ':lua require("telescope.builtin").buffers()<cr>')
 nkeymap('<leader>gg', ':G<cr>')
 nkeymap('<leader>op', ':Explore<cr>')
 nkeymap('<leader>bk', ':bd<cr>')
@@ -183,6 +189,20 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<Tab>"] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end,
+    ["<S-Tab>"] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end,
   },
   sources = {
     { name = 'nvim_lsp' },
@@ -254,6 +274,10 @@ require('lualine').setup {
     component_separators = ''
   }
 }
+
+require('transparent').setup({
+    enable = true,
+})
 
 -- ale lint
 vim.cmd([[

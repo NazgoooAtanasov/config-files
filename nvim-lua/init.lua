@@ -12,7 +12,8 @@ vim.o.incsearch = true
 vim.bo.autoread = true
 vim.o.hlsearch = false
 vim.o.autoread = true
-vim.wo.foldnestmax = 2
+vim.wo.foldnestmax = 0
+vim.wo.cursorline = true
 
 local packer = require 'packer'
 
@@ -29,12 +30,15 @@ packer.startup(function()
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/null-ls.nvim'
-  use "onsails/lspkind-nvim"
+  use 'onsails/lspkind-nvim'
+  use 'p00f/nvim-ts-rainbow'
+  use 'theprimeagen/harpoon'
 
   -- themes
   use {'luisiacc/gruvbox-baby', branch = 'main'}
   use 'jsit/toast.vim'
   use 'RRethy/nvim-base16'
+  use 'Mofiqul/dracula.nvim'
 
   -- Transparency
   use 'xiyaowong/nvim-transparent'
@@ -48,6 +52,7 @@ packer.startup(function()
   use 'farmergreg/vim-lastplace'
   use 'tpope/vim-fugitive'
   use 'voldikss/vim-floaterm'
+  use { 'heavenshell/vim-jsdoc', run='make install' }
 
   -- completion
   use 'hrsh7th/cmp-nvim-lsp'
@@ -75,7 +80,7 @@ packer.startup(function()
   use 'tpope/vim-endwise'
 end)
 
-vim.cmd([[colorscheme base16-onedark]])
+vim.cmd([[colorscheme dracula]])
 
 -- html syntax for isml files
 vim.cmd([[autocmd BufNewFile,BufRead *.isml set ft=html]])
@@ -103,6 +108,11 @@ configs.setup {
   },
   indent = {
     enable = true, -- default is disabled anyways
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = nil
   }
 }
 vim.opt.foldmethod = 'expr'
@@ -164,8 +174,8 @@ nkeymap('<c-s>', ':w<cr>')
 
 -- cool shit
 nkeymap('<leader>nl', ':set nu!<cr>:set relativenumber!<cr>');
-nkeymap('<leader>ll', ':set background=light<cr>:colorscheme toast<cr>');
-nkeymap('<leader>bb', ':set background=dark<cr>:colorscheme gruvbox-baby<cr>');
+nkeymap('<leader>ll', ':set background=light<cr>:colorscheme toast<cr>:TransparentDisable<cr>');
+nkeymap('<leader>bb', ':set background=dark<cr>:colorscheme gruvbox-baby<cr>:TransparentEnable<cr>');
 
 local lspkind = require 'lspkind'
 local cmp = require'cmp'
@@ -266,6 +276,10 @@ if not lspconfig.emmet_ls then
 end
 lspconfig.emmet_ls.setup{ capabilities = capabilities; }
 
+lspconfig.elixirls.setup{
+  cmd = { "/home/ng/.local/share/nvim/lsp_servers/elixir/elixir-ls/language_server.sh" };
+}
+
 -- status line
 require('lualine').setup {
   options = {
@@ -276,7 +290,7 @@ require('lualine').setup {
 }
 
 require('transparent').setup({
-    enable = true,
+    enable = false,
 })
 
 -- ale lint
@@ -286,3 +300,5 @@ let g:ale_fixers = {
 \}]])
 
 vim.cmd([[let g:ale_fix_on_save = 1]])
+
+require("telescope").load_extension('harpoon')

@@ -153,6 +153,7 @@ nkeymap('K', ':lua vim.lsp.buf.hover()<cr>')
 nkeymap('<leader>af', ':lua vim.lsp.buf.code_action()<cr>')
 nkeymap('<leader>rn', ':lua vim.lsp.buf.rename()<cr>')
 nkeymap('<c-k>', ':lua vim.lsp.buf.signature_help()<cr>')
+nkeymap('<leader>jd', ':JsDoc<cr>')
 
 -- navigation keybinds
 -- nkeymap('<leader><leader>', ':GFiles<cr>')

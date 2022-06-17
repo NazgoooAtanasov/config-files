@@ -23,6 +23,7 @@ PS1='[${_BLUE}\u@\h${_RESET} ${_GREEN}\W${_RESET} ${_RED}$(__git_ps1 "git (%s)")
 
 PATH=$PATH:/home/nazgo/.dotnet/tools:/home/nazgo/go/bin
 PATH=$PATH:/home/nazgo/.emacs.d/bin
+PATH=$PATH:/home/ng/.cargo/bin
 
 EDITOR="nvim"
 TERM=xterm-256color

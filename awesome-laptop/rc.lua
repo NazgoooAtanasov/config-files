@@ -221,13 +221,20 @@ awful.key({ modkey }, "Tab", function() awful.layout.inc(1) end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
 
-    awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run") end,
+    -- awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run") end,
+    --           {description = "run prompt", group = "launcher"}),
+    
+    awful.key({ modkey },            "r",     function () awful.spawn("dmenu_run") end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "z", function() awful.spawn("copyq toggle") end,
               {description = "copyq toggle", group = "awesome"}),
 
-    awful.key({ modkey }, "x", function() awful.spawn("flameshot gui") end, { description = "screenshot shit util", group = "awesome" })
+    awful.key({ modkey }, "x", function() awful.spawn("flameshot gui") end, { description = "screenshot shit util", group = "awesome" }),
+
+    awful.key({ modkey, "Shift" }, "c", function() awful.spawn("chromium") end, { description = "screenshot shit util", group = "awesome" }),
+
+    awful.key({ modkey }, "s", function() awful.screen.focus_relative(1) end)
 )
 
 clientkeys = gears.table.join(
@@ -407,7 +414,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
           "picom --no-fading-openclose",
           "nitrogen --restore",
           "setxkbmap -model pc105 -option \"grp:shifts_toggle,compose:    sclk\" \"us,bg(phonetic)\"",
-          "./tmux.start.sh",
+          -- "./tmux.start.sh",
           "cat xrandr.txt | bash"
       }
       for _, i in pairs(cmds) do

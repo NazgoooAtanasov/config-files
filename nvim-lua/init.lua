@@ -53,6 +53,7 @@ packer.startup(function()
   use 'tpope/vim-fugitive'
   use 'voldikss/vim-floaterm'
   use { 'heavenshell/vim-jsdoc', run='make install' }
+  use "tversteeg/registers.nvim"
 
   -- completion
   use 'hrsh7th/cmp-nvim-lsp'
@@ -80,7 +81,7 @@ packer.startup(function()
   use 'tpope/vim-endwise'
 end)
 
-vim.cmd([[colorscheme dracula]])
+vim.cmd([[colorscheme gruvbox-baby]])
 
 -- html syntax for isml files
 vim.cmd([[autocmd BufNewFile,BufRead *.isml set ft=html]])
@@ -177,6 +178,10 @@ nkeymap('<c-s>', ':w<cr>')
 nkeymap('<leader>nl', ':set nu!<cr>:set relativenumber!<cr>');
 nkeymap('<leader>ll', ':set background=light<cr>:colorscheme toast<cr>:TransparentDisable<cr>');
 nkeymap('<leader>bb', ':set background=dark<cr>:colorscheme gruvbox-baby<cr>:TransparentEnable<cr>');
+
+-- harpoon mama
+nkeymap('<leader>hm', ':lua require("harpoon.mark").add_file()<cr>')
+nkeymap('<leader>he', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
 
 local lspkind = require 'lspkind'
 local cmp = require'cmp'
@@ -291,13 +296,15 @@ require('lualine').setup {
 }
 
 require('transparent').setup({
-    enable = false,
+    enable = true,
 })
 
 -- ale lint
 vim.cmd([[
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'tsx': ['eslint'],
+\   'typescript': ['eslint']
 \}]])
 
 vim.cmd([[let g:ale_fix_on_save = 1]])

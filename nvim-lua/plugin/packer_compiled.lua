@@ -149,6 +149,11 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
     url = "https://github.com/iamcco/markdown-preview.nvim"
   },
+  neogit = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/neogit",
+    url = "https://github.com/TimUntersberger/neogit"
+  },
   ["null-ls.nvim"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
@@ -198,6 +203,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["registers.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/registers.nvim",
+    url = "https://github.com/tversteeg/registers.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

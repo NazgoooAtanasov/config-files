@@ -34,9 +34,8 @@ do
 end
 
 local theme_path = string.format(
-    "%s/.config/awesome/themes/%s/theme.lua", 
-    os.getenv("HOME"), 
-    "zenburn"
+    "%s/.config/awesome/theme.lua", 
+    os.getenv("HOME")
 )
 beautiful.init(theme_path)
 

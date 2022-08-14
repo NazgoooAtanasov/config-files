@@ -36,7 +36,7 @@ end
 local theme_path = string.format(
     "%s/.config/awesome/themes/%s/theme.lua", 
     os.getenv("HOME"), 
-    "xresources"
+    "zenburn"
 )
 beautiful.init(theme_path)
 
@@ -73,6 +73,14 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 mytextclock = wibox.widget.textclock()
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+local cw = calendar_widget({
+    placement = "top_right"
+})
+mytextclock:connect_signal("button::press",
+    function(_, _, _, button)
+        if button == 1 then cw.toggle() end 
+    end)
 
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -132,13 +140,6 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons
     }
 
-    -- Create a tasklist widget
-    -- s.mytasklist = awful.widget.tasklist {
-    --     screen  = s,
-    --     filter  = awful.widget.tasklist.filter.currenttags,
-    --     buttons = tasklist_buttons
-    -- }
-
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
@@ -154,6 +155,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
+            require("awesome-wm-widgets.battery-widget.battery")(),
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -210,19 +212,29 @@ awful.key({ modkey }, "Tab", function() awful.layout.inc(1) end),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
+    awful.key({ modkey, "Shift"   }, "s", function () awful.spawn('systemctl suspend') end,
+              {description = "quit awesome", group = "awesome"}),
+
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
 
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
 
-    awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run") end,
+    -- awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run") end,
+    --           {description = "run prompt", group = "launcher"}),
+    
+    awful.key({ modkey },            "r",     function () awful.spawn("dmenu_run") end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "z", function() awful.spawn("copyq toggle") end,
               {description = "copyq toggle", group = "awesome"}),
 
-    awful.key({ modkey }, "x", function() awful.spawn("flameshot gui") end, { description = "screenshot shit util", group = "awesome" })
+    awful.key({ modkey }, "x", function() awful.spawn("flameshot gui") end, { description = "screenshot shit util", group = "awesome" }),
+
+    awful.key({ modkey, "Shift" }, "c", function() awful.spawn("chromium") end, { description = "screenshot shit util", group = "awesome" }),
+
+    awful.key({ modkey }, "s", function() awful.screen.focus_relative(1) end)
 )
 
 clientkeys = gears.table.join(
@@ -331,17 +343,7 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 
 awful.rules.rules = {
-    { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     raise = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons,
-                     screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
-    },
+    { rule = { }, properties = { border_width = beautiful.border_width, border_color = beautiful.border_normal, focus = awful.client.focus.filter, raise = true, keys = clientkeys, buttons = clientbuttons, screen = awful.screen.preferred, placement = awful.placement.no_overlap+awful.placement.no_offscreen } },
 
     { rule_any = {
         instance = {
@@ -374,19 +376,6 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = false }
     },
-
-    -- this is cool and easy to use unlike qtile :D (Nazgo)
-    { rule = { class = "Brave" },
-       properties = { screen = 1, tag = "5" } },
-
-    { rule = { class = "spotify" },
-       properties = { screen = 1, tag = "4" } },
-
-    { rule = { class = "Spotify" },
-       properties = { screen = 1, tag = "4" } },
-
-    { rule = { class = "Skype" },
-       properties = { screen = 1, tag = "4" } },
 }
 
 -- {{{ Signals
@@ -416,5 +405,20 @@ client.connect_signal("focus", function(c)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 -- Auto start shell shit (Nazgo)
-awful.spawn.with_shell("/home/nazgo/.config/awesome/autostart.sh")
+-- awful.spawn.with_shell("/home/nazgo/.config/awesome/autostart.sh")
+  do
+      local cmds = {
+          "redshift-gtk -P -O 3000",
+          "flameshot",
+          "copyq",
+          "picom --no-fading-openclose",
+          "nitrogen --restore",
+          "setxkbmap -model pc105 -option \"grp:shifts_toggle,compose:    sclk\" \"us,bg(phonetic)\"",
+          -- "./tmux.start.sh",
+          "cat xrandr.txt | bash"
+      }
+      for _, i in pairs(cmds) do
+          awful.util.spawn(i)
+      end
+  end
 -- }}}

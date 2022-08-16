@@ -124,6 +124,11 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/fzf.vim",
     url = "https://github.com/junegunn/fzf.vim"
   },
+  gitspector = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/gitspector",
+    url = "https://github.com/NazgoooAtanasov/gitspector"
+  },
   ["gruvbox-baby"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/gruvbox-baby",

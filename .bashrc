@@ -33,7 +33,7 @@ alias search="pacman -Ss"
 alias install="sudo pacman -S"
 alias remove="sudo pacman -Rcns"
 alias installed="pacman -Q | less"
-alias nve="v ~/config-files/nvim-lua/init.lua"
+alias nve="v ~/config-files/nvim/init.lua"
 
 alias ai="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/acne'"
 

@@ -33,6 +33,25 @@ do
     end)
 end
 
+-- idk just stole a normal string split func.
+function Split(s, delimiter)
+    local result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+local get_priv_ip = function ()
+    local handle = io.popen("hostname -i")
+    local ips = handle:read("*a")
+    handle:close()
+
+    local ip = Split(ips, " ")[1]
+
+    return ip
+end
+
 local theme_path = string.format(
     "%s/.config/awesome/theme.lua", 
     os.getenv("HOME")
@@ -156,6 +175,7 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             require("awesome-wm-widgets.battery-widget.battery")(),
             wibox.widget.systray(),
+            wibox.widget.textbox(get_priv_ip()),
             mytextclock,
             s.mylayoutbox,
         },

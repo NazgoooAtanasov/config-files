@@ -219,9 +219,6 @@ awful.key({ modkey }, "Tab", function() awful.layout.inc(1) end),
 
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
-
-    -- awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run") end,
-    --           {description = "run prompt", group = "launcher"}),
     
     awful.key({ modkey },            "r",     function () awful.spawn("dmenu_run") end,
               {description = "run prompt", group = "launcher"}),
@@ -233,7 +230,10 @@ awful.key({ modkey }, "Tab", function() awful.layout.inc(1) end),
 
     awful.key({ modkey, "Shift" }, "c", function() awful.spawn("chromium") end, { description = "screenshot shit util", group = "awesome" }),
 
-    awful.key({ modkey }, "s", function() awful.screen.focus_relative(1) end)
+    -- awful.key({ modkey }, "s", function() awful.screen.focus_relative(1) end)
+
+    awful.key({ modkey, "Control" }, "h", function() awful.screen.focus_relative(2) end),
+    awful.key({ modkey, "Control" }, "l", function() awful.screen.focus_relative(-2) end)
 )
 
 clientkeys = gears.table.join(

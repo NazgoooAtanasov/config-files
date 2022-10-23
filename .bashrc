@@ -24,6 +24,9 @@ PS1='[${_BLUE}\u@\h${_RESET} ${_GREEN}\W${_RESET} ${_RED}$(__git_ps1 "git (%s)")
 PATH=$PATH:/home/nazgo/.dotnet/tools:/home/nazgo/go/bin
 PATH=$PATH:/home/nazgo/.emacs.d/bin
 PATH=$PATH:/home/ng/.cargo/bin
+PATH=$PATH:/home/ng/eclipse
+
+export ANDROID_HOME=/home/ng/Android/Sdk
 
 EDITOR="nvim"
 TERM=xterm-256color
@@ -35,7 +38,7 @@ alias remove="sudo pacman -Rcns"
 alias installed="pacman -Q | less"
 alias nve="v ~/config-files/nvim/init.lua"
 
-alias ai="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/acne'"
+alias tr="GIT_SSH_COMMAND='ssh -i /home/ng/.ssh/trimtex'"
 
 alias ls="exa -la"
 alias v="nvim"

@@ -10,6 +10,7 @@ vim.o.hlsearch = false
 vim.o.autoread = true
 vim.wo.foldnestmax = 0
 vim.wo.cursorline = true
+vim.o.mouse = false
 
 local packer = require("packer")
 
@@ -23,6 +24,7 @@ packer.init({
 packer.startup(function()
     -- treesitter and lsp
     use "nvim-treesitter/nvim-treesitter"
+    use 'nvim-treesitter/nvim-treesitter-context'
     use "neovim/nvim-lspconfig"
     use "williamboman/nvim-lsp-installer"
     use "jose-elias-alvarez/null-ls.nvim"
@@ -34,13 +36,17 @@ packer.startup(function()
     use {"luisiacc/gruvbox-baby", branch = "main"}
     use "jsit/toast.vim"
     use "RRethy/nvim-base16"
+    use "folke/tokyonight.nvim"
     use "Mofiqul/dracula.nvim"
 
     -- Transparency
     use "xiyaowong/nvim-transparent"
 
     -- goodies
-    use "jiangmiao/auto-pairs"
+    use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    }
     use "airblade/vim-gitgutter"
     use "junegunn/fzf.vim"
     use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
@@ -50,6 +56,7 @@ packer.startup(function()
     use "voldikss/vim-floaterm"
     use { "heavenshell/vim-jsdoc", run="make install" }
     use "tversteeg/registers.nvim"
+    use "RRethy/vim-illuminate"
 
     -- completion
     use "hrsh7th/cmp-nvim-lsp"
@@ -74,9 +81,11 @@ packer.startup(function()
     use "tpope/vim-endwise"
 
     use "NazgoooAtanasov/gitspector"
+
+    use "~/_Projects/sfcc-debugger.nvim"
 end)
 
-vim.cmd([[colorscheme base16-onedark]])
+vim.cmd([[colorscheme tokyonight]])
 
 -- html syntax for isml files
 vim.cmd([[autocmd BufNewFile,BufRead *.isml set ft=html]])
@@ -167,6 +176,7 @@ nkeymap("<leader>vs", ":vs<cr>")
 nkeymap("<leader>s", ":split<cr>")
 nkeymap("<leader>w", ":only<cr>")
 nkeymap("<leader>tt", ":FloatermNew<cr>")
+nkeymap("<leader>ht", ":Telescope help_tags<cr>")
 nkeymap("<c-s>", ":w<cr>")
 
 -- cool shit
@@ -313,7 +323,9 @@ vim.cmd([[
 let g:ale_fixers = {
 \   "javascript": ["eslint"],
 \   "tsx": ["eslint"],
-\   "typescript": ["eslint"]
+\   "typescript": ["prettier", "eslint"],
+\   "typescriptreact": ["prettier"],
+\   "javascriptreact": ["prettier"]
 \}]])
 
 vim.cmd([[let g:ale_fix_on_save = 1]])

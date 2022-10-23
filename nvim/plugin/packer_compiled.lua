@@ -79,11 +79,6 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/ale",
     url = "https://github.com/dense-analysis/ale"
   },
-  ["auto-pairs"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/auto-pairs",
-    url = "https://github.com/jiangmiao/auto-pairs"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -159,6 +154,12 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
+  ["nvim-autopairs"] = {
+    config = { "\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0" },
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
+  },
   ["nvim-base16"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-base16",
@@ -189,6 +190,11 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
+  ["nvim-treesitter-context"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-context"
+  },
   ["nvim-ts-rainbow"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow",
@@ -209,6 +215,11 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/registers.nvim",
     url = "https://github.com/tversteeg/registers.nvim"
   },
+  ["sfcc-debugger.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-debugger.nvim",
+    url = "/home/ng/_Projects/sfcc-debugger.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -218,6 +229,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/toast.vim",
     url = "https://github.com/jsit/toast.vim"
+  },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
   },
   ["vim-commentary"] = {
     loaded = true,
@@ -249,6 +265,11 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
     url = "https://github.com/airblade/vim-gitgutter"
   },
+  ["vim-illuminate"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/vim-illuminate",
+    url = "https://github.com/RRethy/vim-illuminate"
+  },
   ["vim-jsdoc"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/vim-jsdoc",
@@ -262,6 +283,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
 if should_profile then save_profiles() end
 
 end)

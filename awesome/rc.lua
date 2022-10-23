@@ -141,7 +141,7 @@ local tasklist_buttons = gears.table.join(
 
 awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8" }, s, awful.layout.layouts[1])
 
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
@@ -433,8 +433,8 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
           "picom --no-fading-openclose",
           "nitrogen --restore",
           "setxkbmap -model pc105 -option \"grp:shifts_toggle,compose:    sclk\" \"us,bg(phonetic)\"",
-          -- "./tmux.start.sh",
-          "cat xrandr.txt | bash"
+          "mailspring &",
+          "discord &"
       }
       for _, i in pairs(cmds) do
           awful.util.spawn(i)

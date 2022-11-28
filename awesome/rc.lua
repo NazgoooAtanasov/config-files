@@ -240,7 +240,7 @@ awful.key({ modkey }, "Tab", function() awful.layout.inc(1) end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
     
-    awful.key({ modkey },            "r",     function () awful.spawn("dmenu_run") end,
+    awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run") end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "z", function() awful.spawn("copyq toggle") end,

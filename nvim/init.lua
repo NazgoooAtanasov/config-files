@@ -11,6 +11,7 @@ vim.o.autoread = true
 vim.wo.foldnestmax = 0
 vim.wo.cursorline = true
 vim.o.mouse = false
+vim.o.ignorecase = true
 
 local packer = require("packer")
 
@@ -30,12 +31,11 @@ packer.startup(function()
     use "jose-elias-alvarez/null-ls.nvim"
     use "onsails/lspkind-nvim"
     use "p00f/nvim-ts-rainbow"
+
     use "theprimeagen/harpoon"
 
     -- themes
     use {"luisiacc/gruvbox-baby", branch = "main"}
-    use "jsit/toast.vim"
-    use "RRethy/nvim-base16"
     use "folke/tokyonight.nvim"
     use "Mofiqul/dracula.nvim"
 
@@ -48,14 +48,13 @@ packer.startup(function()
         config = function() require("nvim-autopairs").setup {} end
     }
     use "airblade/vim-gitgutter"
-    use "junegunn/fzf.vim"
     use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
     use "tpope/vim-commentary"
     use "farmergreg/vim-lastplace"
     use "tpope/vim-fugitive"
     use "voldikss/vim-floaterm"
     use { "heavenshell/vim-jsdoc", run="make install" }
-    use "tversteeg/registers.nvim"
+
     use "RRethy/vim-illuminate"
 
     -- completion
@@ -177,12 +176,9 @@ nkeymap("<leader>s", ":split<cr>")
 nkeymap("<leader>w", ":only<cr>")
 nkeymap("<leader>tt", ":FloatermNew<cr>")
 nkeymap("<leader>ht", ":Telescope help_tags<cr>")
-nkeymap("<c-s>", ":w<cr>")
 
 -- cool shit
 nkeymap("<leader>nl", ":set nu!<cr>:set relativenumber!<cr>");
-nkeymap("<leader>ll", ":set background=light<cr>:colorscheme toast<cr>:TransparentDisable<cr>");
-nkeymap("<leader>bb", ":set background=dark<cr>:colorscheme gruvbox-baby<cr>:TransparentEnable<cr>");
 
 -- harpoon mama
 nkeymap("<leader>hm", ":lua require('harpoon.mark').add_file()<cr>")
@@ -280,7 +276,7 @@ cmp.setup.cmdline(":", {
     })
 })
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 require("lspconfig")["tsserver"].setup({
     capabilities = capabilities

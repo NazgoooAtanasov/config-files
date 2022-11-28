@@ -114,11 +114,6 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/dracula.nvim",
     url = "https://github.com/Mofiqul/dracula.nvim"
   },
-  ["fzf.vim"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/fzf.vim",
-    url = "https://github.com/junegunn/fzf.vim"
-  },
   gitspector = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/gitspector",
@@ -159,11 +154,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
     url = "https://github.com/windwp/nvim-autopairs"
-  },
-  ["nvim-base16"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-base16",
-    url = "https://github.com/RRethy/nvim-base16"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -210,11 +200,6 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["registers.nvim"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/registers.nvim",
-    url = "https://github.com/tversteeg/registers.nvim"
-  },
   ["sfcc-debugger.nvim"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-debugger.nvim",
@@ -224,11 +209,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
-  },
-  ["toast.vim"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/toast.vim",
-    url = "https://github.com/jsit/toast.vim"
   },
   ["tokyonight.nvim"] = {
     loaded = true,

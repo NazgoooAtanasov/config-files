@@ -172,12 +172,69 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+
+            lain.util.separators.arrow_left('alpha', '#FFFFFF'),
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            {
+                require("awesome-wm-widgets.net-speed-widget.net-speed")({ width = 40 }),
+                fg = '#000000',
+                bg = '#FFFFFF',
+                widget = wibox.container.background
+            },
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            lain.util.separators.arrow_left('#FFFFFF', 'alpha'),
+
+            wibox.widget.textbox('  '),
             mykeyboardlayout,
-            require("awesome-wm-widgets.battery-widget.battery")(),
+            wibox.widget.textbox('  '),
+
+            lain.util.separators.arrow_left('alpha', '#FFFFFF'),
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            {
+                require("awesome-wm-widgets.battery-widget.battery")(),
+                fg = '#000000',
+                bg = '#FFFFFF',
+                widget = wibox.container.background
+            },
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            lain.util.separators.arrow_left('#FFFFFF', 'alpha'),
+
+            wibox.widget.textbox('  '),
             wibox.widget.systray(),
-            wibox.widget.textbox(get_priv_ip()),
+            wibox.widget.textbox('  '),
+
+            lain.util.separators.arrow_left('alpha', '#FFFFFF'),
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            {
+                {
+                    text = get_priv_ip(),
+                    widget = wibox.widget.textbox
+                },
+                fg = '#000000',
+                bg = '#FFFFFF',
+                widget = wibox.container.background
+            },
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            lain.util.separators.arrow_left('#FFFFFF', 'alpha'),
+
+            wibox.widget.textbox('  '),
             mytextclock,
-            s.mylayoutbox,
+            wibox.widget.textbox('  '),
+
+            lain.util.separators.arrow_left('alpha', '#FFFFFF'),
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            {
+                s.mylayoutbox,
+                {
+                    text = get_priv_ip(),
+                    widget = wibox.widget.textbox
+                },
+                fg = '#000000',
+                bg = '#FFFFFF',
+                widget = wibox.container.background
+            },
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
+            wibox.container.background(wibox.widget.textbox('  '), '#FFFFFF'),
         },
     }
 end)

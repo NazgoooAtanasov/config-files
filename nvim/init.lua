@@ -12,6 +12,7 @@ vim.wo.foldnestmax = 0
 vim.wo.cursorline = true
 vim.o.mouse = false
 vim.o.ignorecase = true
+vim.o.guicursor = "n-v-c-sm:block"
 
 local packer = require("packer")
 
@@ -32,12 +33,11 @@ packer.startup(function()
     use "onsails/lspkind-nvim"
     use "p00f/nvim-ts-rainbow"
 
-    use "theprimeagen/harpoon"
-
     -- themes
     use {"luisiacc/gruvbox-baby", branch = "main"}
     use "folke/tokyonight.nvim"
     use "Mofiqul/dracula.nvim"
+    use "GustavoPrietoP/doom-themes.nvim"
 
     -- Transparency
     use "xiyaowong/nvim-transparent"
@@ -52,7 +52,6 @@ packer.startup(function()
     use "tpope/vim-commentary"
     use "farmergreg/vim-lastplace"
     use "tpope/vim-fugitive"
-    use "voldikss/vim-floaterm"
     use { "heavenshell/vim-jsdoc", run="make install" }
 
     use "RRethy/vim-illuminate"
@@ -65,26 +64,32 @@ packer.startup(function()
     use "hrsh7th/nvim-cmp"
     use "L3MON4D3/LuaSnip"
     use "saadparwaiz1/cmp_luasnip"
-    use {"tzachar/cmp-tabnine", run="./install.sh", requires = "hrsh7th/nvim-cmp"}
 
     -- ale lint
     use "dense-analysis/ale"
 
     -- markdown
-    use "iamcco/markdown-preview.nvim"
+    use 'davidgranstrom/nvim-markdown-preview'
 
     -- Telescope
-    use { "nvim-telescope/telescope.nvim", requires = { {"nvim-lua/plenary.nvim"} } }
+    use {
+        "nvim-telescope/telescope.nvim",
+        requires = {
+            {"nvim-lua/plenary.nvim"},
+            {"nvim-telescope/telescope-live-grep-args.nvim"},
+        },
+        config = function()
+            require("telescope").load_extension("live_grep_args")
+        end
+    }
 
-    use "elixir-editors/vim-elixir"
-    use "tpope/vim-endwise"
+    use "folke/todo-comments.nvim"
 
     use "NazgoooAtanasov/gitspector"
 
     use "~/_Projects/sfcc-debugger.nvim"
+    use "~/_Projects/sfcc-cartridges.nvim"
 end)
-
-vim.cmd([[colorscheme tokyonight]])
 
 -- html syntax for isml files
 vim.cmd([[autocmd BufNewFile,BufRead *.isml set ft=html]])
@@ -128,17 +133,17 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
     local opts = {}
-        if server.name == "sumneko_lua" then
-            opts = {
-                settings = {
-                    Lua = {
-                        diagnostics = {
-                            globals = { "vim", "use" }
-                        }
+    if server.name == "lua_ls" then
+        opts = {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { "vim", "use" }
                     }
                 }
             }
-        end
+        }
+    end
     server:setup(opts)
 end)
 
@@ -161,10 +166,11 @@ nkeymap("<leader>af", ":lua vim.lsp.buf.code_action()<cr>")
 nkeymap("<leader>rn", ":lua vim.lsp.buf.rename()<cr>")
 nkeymap("<c-k>", ":lua vim.lsp.buf.signature_help()<cr>")
 nkeymap("<leader>jd", ":JsDoc<cr>")
+nkeymap("<leader>dd", ":Telescope diagnostics<cr>")
 
 -- navigation keybinds
 nkeymap("<leader><leader>", ":lua require('telescope.builtin').find_files()<cr>")
-nkeymap("<leader>/", ":lua require('telescope.builtin').live_grep()<cr>")
+nkeymap("<leader>/", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>")
 nkeymap("<leader>,", ":lua require('telescope.builtin').buffers()<cr>")
 nkeymap("<leader>gg", ":G<cr>")
 nkeymap("<leader>op", ":Explore<cr>")
@@ -174,18 +180,20 @@ nkeymap("<leader>bn", ":bn<cr>")
 nkeymap("<leader>vs", ":vs<cr>")
 nkeymap("<leader>s", ":split<cr>")
 nkeymap("<leader>w", ":only<cr>")
-nkeymap("<leader>tt", ":FloatermNew<cr>")
 nkeymap("<leader>ht", ":Telescope help_tags<cr>")
+nkeymap("<leader>cn", ":cnext<cr>")
+nkeymap("<leader>cp", ":cprev<cr>")
 
 -- cool shit
 nkeymap("<leader>nl", ":set nu!<cr>:set relativenumber!<cr>");
 
--- harpoon mama
-nkeymap("<leader>hm", ":lua require('harpoon.mark').add_file()<cr>")
-nkeymap("<leader>he", ":lua require('harpoon.ui').toggle_quick_menu()<cr>")
-
 -- gitspector <3
 nkeymap("<leader>br", ":lua require('gitspector').branches_list()<cr>")
+
+nkeymap("H", "")
+nkeymap("L", "")
+
+require('sfcc-cartridges').setup({ sourceName = "sfcc" })
 
 local lspkind = require("lspkind")
 local cmp = require("cmp")
@@ -235,8 +243,9 @@ cmp.setup({
     },
 
     sources = {
+        { name = "sfcc" },
         { name = "nvim_lsp" },
-        { name = "cmp_tabnine" },
+        -- { name = "cmp_tabnine" },
         { name = "luasnip" },
         { name = "buffer" },
     },
@@ -245,21 +254,13 @@ cmp.setup({
         format = lspkind.cmp_format {
             menu = {
                 nvim_lsp = "[lsp]",
-                cmp_tabnine = "[t9]",
+                -- cmp_tabnine = "[t9]",
                 luasnip = "[luasnip]",
-                buffer = "[buff]"
+                buffer = "[buff]",
+                kur = "[kur]"
             }
         }
     }
-})
-
-local tabnine = require("cmp_tabnine.config")
-tabnine:setup({
-	max_lines = 1000;
-	max_num_results = 20;
-	sort = true;
-	run_on_every_keystroke = true;
-	snippet_placeholder = "..";
 })
 
 cmp.setup.cmdline("/", {
@@ -284,6 +285,8 @@ require("lspconfig")["tsserver"].setup({
 
 -- emet config
 local lspconfig = require("lspconfig")
+local lspconfig_configs = require("lspconfig.configs")
+local util = require("lspconfig.util")
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 if not lspconfig.emmet_ls then
     configs.emmet_ls = {
@@ -295,11 +298,30 @@ if not lspconfig.emmet_ls then
         };
     }
 end
+
 lspconfig.emmet_ls.setup({ capabilities = capabilities })
 
 lspconfig.elixirls.setup({
     cmd = { "/home/ng/.local/share/nvim/lsp_servers/elixir/elixir-ls/language_server.sh" };
 })
+
+if not lspconfig_configs.testinglsp then
+    lspconfig_configs.testinglsp = {
+        default_config = {
+            cmd = { "/home/ng/_Projects/lsp/target/release/lsp" },
+            filetypes = { "lua" },
+            root_dir = util.root_pattern("Makefile", ".git", "*.gpr", "*.adc"),
+            single_file_support = true,
+            init_options = {
+                configuration = {
+                    testinglsp = { enabled = true }
+                }
+            },
+            settings = {},
+        }
+    }
+end
+lspconfig.testinglsp.setup({})
 
 -- status line
 require("lualine").setup({
@@ -310,9 +332,7 @@ require("lualine").setup({
     }
 })
 
-require("transparent").setup({
-    enable = true,
-})
+require("transparent").setup()
 
 -- ale lint
 vim.cmd([[
@@ -324,6 +344,11 @@ let g:ale_fixers = {
 \   "javascriptreact": ["prettier"]
 \}]])
 
+vim.cmd([[
+let g:ale_pattern_options = {'\.isml$': {'ale_enabled': 0}}
+]])
+
 vim.cmd([[let g:ale_fix_on_save = 1]])
 
-require("telescope").load_extension("harpoon")
+require("todo-comments").setup()
+vim.cmd([[colorscheme gruvbox-baby]])

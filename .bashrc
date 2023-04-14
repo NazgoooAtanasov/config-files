@@ -25,6 +25,7 @@ PATH=$PATH:/home/nazgo/.dotnet/tools:/home/nazgo/go/bin
 PATH=$PATH:/home/nazgo/.emacs.d/bin
 PATH=$PATH:/home/ng/.cargo/bin
 PATH=$PATH:/home/ng/eclipse
+PATH=$PATH:/home/ng/_Projects/lsp/target/release
 
 export ANDROID_HOME=/home/ng/Android/Sdk
 
@@ -37,19 +38,14 @@ alias install="sudo pacman -S"
 alias remove="sudo pacman -Rcns"
 alias installed="pacman -Q | less"
 alias nve="v ~/config-files/nvim/init.lua"
-
-alias tr="GIT_SSH_COMMAND='ssh -i /home/ng/.ssh/trimtex'"
-
 alias ls="exa -la"
 alias v="nvim"
-
-# Git aliasses
-# alias 'git r'="git rebase -i"
+alias tr="GIT_SSH_COMMAND='ssh -i /home/ng/.ssh/trimtex'"
+alias ac="cd /home/ng/_Forkpoint/acne/app-project"
 alias githardreset="git fetch && git reset --hard @{u}"
-
 alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
-
 alias tmuxd="tmux detach"
+alias tmux="tmux -u"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

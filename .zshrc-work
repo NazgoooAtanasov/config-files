@@ -1,8 +1,8 @@
 # oh-my-zsh is required!
 
-export ZSH="/home/nazgo/.oh-my-zsh"
+export ZSH="/home/ng/.oh-my-zsh"
 
-ZSH_THEME="sorin"
+ZSH_THEME="cloud"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
@@ -10,35 +10,30 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 export EDITOR="nvim"
 export TERM=xterm-256color
+export PATH=$PATH:/home/nazgo/.dotnet/tools:/home/nazgo/go/bin
+export PATH=$PATH:/home/nazgo/.emacs.d/bin
+export PATH=$PATH:/home/ng/.cargo/bin
+export PATH=$PATH:/home/ng/eclipse
+export PATH=$PATH:/home/ng/_Projects/lsp/target/release
+export ANDROID_HOME=/home/ng/Android/Sdk
 
-alias tmuxd="tmux detach"
 alias update="sudo pacman -Syu"
 alias search="pacman -Ss"
 alias install="sudo pacman -S"
 alias remove="sudo pacman -Rcns"
 alias installed="pacman -Q | less"
-
-alias bd="cd ~/_ForkPoint/bd-ecommerce && nvm use"
-alias cl="cd ~/_ForkPoint/cloudstart && nvm use 10.19"
-alias ds="cd ~/_ForkPoint/salesforce"
-alias ac="cd ~/_ForkPoint/acne && nvm use"
-alias acl="cd ~/_ForkPoint/acne-legacy"
-alias acc="code ~/_ForkPoint/acne"
-
+alias nve="v ~/config-files/nvim/init.lua"
 alias ls="exa -la"
-alias vim="nvim"
-eval $(thefuck --alias fak)
-
-# Git shit
-alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
-alias fpDevSsh="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/fpDev'"
-alias simob="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/simoB'"
-alias ai="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/ai'"
+alias v="nvim"
+alias tr="GIT_SSH_COMMAND='ssh -i /home/ng/.ssh/trimtex'"
+alias stine="GIT_SSH_COMMAND='ssh -i /home/ng/.ssh/stine'"
+alias ac="cd /home/ng/_Forkpoint/acne/app-project"
+alias st="cd /home/ng/_Forkpoint/stinecommercecloud"
 alias githardreset="git fetch && git reset --hard @{u}"
-alias gitd="git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 -o -t git add"
-alias 'git r'="git rebase -i"
+alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
+alias tmuxd="tmux detach"
+alias tmux="tmux -u"
 
-[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-source /usr/share/nvm/nvm.sh
-source /usr/share/nvm/bash_completion
-source /usr/share/nvm/install-nvm-exec
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

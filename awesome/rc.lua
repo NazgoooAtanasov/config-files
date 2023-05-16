@@ -307,10 +307,8 @@ awful.key({ modkey }, "Tab", function() awful.layout.inc(1) end),
 
     awful.key({ modkey, "Shift" }, "c", function() awful.spawn("chromium") end, { description = "screenshot shit util", group = "awesome" }),
 
-    -- awful.key({ modkey }, "s", function() awful.screen.focus_relative(1) end)
-
-    awful.key({ modkey, "Control" }, "h", function() awful.screen.focus_relative(2) end),
-    awful.key({ modkey, "Control" }, "l", function() awful.screen.focus_relative(-2) end)
+    awful.key({ modkey, "Control" }, "h", function() awful.screen.focus_relative(1) end),
+    awful.key({ modkey, "Control" }, "l", function() awful.screen.focus_relative(-1) end)
 )
 
 clientkeys = gears.table.join(
@@ -487,14 +485,17 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
           "redshift-gtk -P -O 3000",
           "flameshot",
           "copyq",
-          "picom --no-fading-openclose",
+          "picom --no-fading-openclose --fade-in-step=1 --fade-out-step=1 --fade-delta=0",
           "nitrogen --restore",
           "setxkbmap -model pc105 -option \"grp:shifts_toggle,compose:    sclk\" \"us,bg(phonetic)\"",
           "mailspring &",
-          "discord &"
+          "nm-applet &",
+          "emacsclient &",
+          -- "/home/ng/.screenlayout/screens.sh"
       }
       for _, i in pairs(cmds) do
           awful.util.spawn(i)
       end
   end
 -- }}}
+

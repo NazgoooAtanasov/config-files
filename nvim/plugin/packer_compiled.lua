@@ -109,10 +109,10 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["doom-themes.nvim"] = {
+  ["doom-one.vim"] = {
     loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/doom-themes.nvim",
-    url = "https://github.com/GustavoPrietoP/doom-themes.nvim"
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/doom-one.vim",
+    url = "https://github.com/romgrk/doom-one.vim"
   },
   ["dracula.nvim"] = {
     loaded = true,
@@ -200,16 +200,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
-  },
-  ["sfcc-cartridges.nvim"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-cartridges.nvim",
-    url = "/home/ng/_Projects/sfcc-cartridges.nvim"
-  },
-  ["sfcc-debugger.nvim"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-debugger.nvim",
-    url = "/home/ng/_Projects/sfcc-debugger.nvim"
   },
   ["telescope-live-grep-args.nvim"] = {
     loaded = true,

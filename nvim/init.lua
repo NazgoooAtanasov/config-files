@@ -37,7 +37,7 @@ packer.startup(function()
     use {"luisiacc/gruvbox-baby", branch = "main"}
     use "folke/tokyonight.nvim"
     use "Mofiqul/dracula.nvim"
-    use "GustavoPrietoP/doom-themes.nvim"
+    use "romgrk/doom-one.vim"
 
     -- Transparency
     use "xiyaowong/nvim-transparent"
@@ -87,8 +87,8 @@ packer.startup(function()
 
     use "NazgoooAtanasov/gitspector"
 
-    use "~/_Projects/sfcc-debugger.nvim"
-    use "~/_Projects/sfcc-cartridges.nvim"
+    -- use "~/_Projects/sfcc-debugger.nvim"
+    -- use "~/_Projects/sfcc-cartridges.nvim"
 end)
 
 -- html syntax for isml files
@@ -176,7 +176,6 @@ nkeymap("<leader>gg", ":G<cr>")
 nkeymap("<leader>op", ":Explore<cr>")
 nkeymap("<leader>bk", ":bd<cr>")
 nkeymap("<leader>bd", ":%bd<cr>")
-nkeymap("<leader>bn", ":bn<cr>")
 nkeymap("<leader>vs", ":vs<cr>")
 nkeymap("<leader>s", ":split<cr>")
 nkeymap("<leader>w", ":only<cr>")
@@ -193,7 +192,7 @@ nkeymap("<leader>br", ":lua require('gitspector').branches_list()<cr>")
 nkeymap("H", "")
 nkeymap("L", "")
 
-require('sfcc-cartridges').setup({ sourceName = "sfcc" })
+-- require('sfcc-cartridges').setup({ sourceName = "sfcc" })
 
 local lspkind = require("lspkind")
 local cmp = require("cmp")
@@ -245,7 +244,6 @@ cmp.setup({
     sources = {
         { name = "sfcc" },
         { name = "nvim_lsp" },
-        -- { name = "cmp_tabnine" },
         { name = "luasnip" },
         { name = "buffer" },
     },
@@ -254,7 +252,6 @@ cmp.setup({
         format = lspkind.cmp_format {
             menu = {
                 nvim_lsp = "[lsp]",
-                -- cmp_tabnine = "[t9]",
                 luasnip = "[luasnip]",
                 buffer = "[buff]",
                 kur = "[kur]"
@@ -263,19 +260,8 @@ cmp.setup({
     }
 })
 
-cmp.setup.cmdline("/", {
-    sources = {
-        { name = "buffer" }
-    }
-})
-
-cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({
-        { name = "path" }
-    }, {
-        { name = "cmdline" }
-    })
-})
+cmp.setup.cmdline("/", { sources = { { name = "buffer" } } })
+cmp.setup.cmdline(":", { sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }) })
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -298,30 +284,7 @@ if not lspconfig.emmet_ls then
         };
     }
 end
-
 lspconfig.emmet_ls.setup({ capabilities = capabilities })
-
-lspconfig.elixirls.setup({
-    cmd = { "/home/ng/.local/share/nvim/lsp_servers/elixir/elixir-ls/language_server.sh" };
-})
-
-if not lspconfig_configs.testinglsp then
-    lspconfig_configs.testinglsp = {
-        default_config = {
-            cmd = { "/home/ng/_Projects/lsp/target/release/lsp" },
-            filetypes = { "lua" },
-            root_dir = util.root_pattern("Makefile", ".git", "*.gpr", "*.adc"),
-            single_file_support = true,
-            init_options = {
-                configuration = {
-                    testinglsp = { enabled = true }
-                }
-            },
-            settings = {},
-        }
-    }
-end
-lspconfig.testinglsp.setup({})
 
 -- status line
 require("lualine").setup({
@@ -341,14 +304,11 @@ let g:ale_fixers = {
 \   "tsx": ["eslint"],
 \   "typescript": ["prettier", "eslint"],
 \   "typescriptreact": ["prettier"],
-\   "javascriptreact": ["prettier"]
+\   "javascriptreact": ["prettier"],
+\   "svelte": ["prettier"]
 \}]])
-
-vim.cmd([[
-let g:ale_pattern_options = {'\.isml$': {'ale_enabled': 0}}
-]])
-
+vim.cmd([[ let g:ale_pattern_options = {'\.isml$': {'ale_enabled': 0}} ]])
 vim.cmd([[let g:ale_fix_on_save = 1]])
+vim.cmd([[colorscheme tokyonight-storm]])
 
 require("todo-comments").setup()
-vim.cmd([[colorscheme gruvbox-baby]])

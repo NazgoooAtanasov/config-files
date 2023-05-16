@@ -29,7 +29,7 @@ PATH=$PATH:/home/ng/_Projects/lsp/target/release
 
 export ANDROID_HOME=/home/ng/Android/Sdk
 
-EDITOR="nvim"
+export EDITOR="nvim"
 TERM=xterm-256color
 
 alias update="sudo pacman -Syu"
@@ -46,9 +46,11 @@ alias githardreset="git fetch && git reset --hard @{u}"
 alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
 alias tmuxd="tmux detach"
 alias tmux="tmux -u"
+alias sd="cd \$(find . -type d -not -path '*/node_modules/*' | fzf)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [[ ${BLE_VERSION-} ]] && ble-attach
+source /usr/share/nvm/init-nvm.sh

@@ -491,6 +491,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
           "mailspring &",
           "nm-applet &",
           "emacsclient &",
+          "/usr/lib/polkit-kde-authentication-agent-1 &"
           -- "/home/ng/.screenlayout/screens.sh"
       }
       for _, i in pairs(cmds) do

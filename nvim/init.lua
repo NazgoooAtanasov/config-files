@@ -13,6 +13,16 @@ vim.wo.cursorline = true
 vim.o.mouse = false
 vim.o.ignorecase = true
 vim.o.guicursor = "n-v-c-sm:block"
+-- vim.o.wildmode="longest,list"
+
+-- netrw
+vim.g.netrw_banner = 0
+vim.g.netrw_sizestyle = "H"
+vim.g.netrw_liststyle = 0
+vim.g.netrw_localcopydircmd = "cp -r"
+vim.g.netrw_localmkdir = "mkdir -p"
+vim.g.netrw_localrmdir = "rm -r"
+vim.g.netrw_sort_sequence = [[[\/]$,*]]
 
 local packer = require("packer")
 
@@ -36,8 +46,11 @@ packer.startup(function()
     -- themes
     use {"luisiacc/gruvbox-baby", branch = "main"}
     use "folke/tokyonight.nvim"
-    use "Mofiqul/dracula.nvim"
-    use "romgrk/doom-one.vim"
+
+    use "Tsuzat/NeoSolarized.nvim"
+    use { "bluz71/vim-moonfly-colors", as = "moonfly" }
+    use "fcpg/vim-orbital"
+    use "rose-pine/neovim"
 
     -- Transparency
     use "xiyaowong/nvim-transparent"
@@ -69,7 +82,7 @@ packer.startup(function()
     use "dense-analysis/ale"
 
     -- markdown
-    use 'davidgranstrom/nvim-markdown-preview'
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
     -- Telescope
     use {
@@ -79,16 +92,22 @@ packer.startup(function()
             {"nvim-telescope/telescope-live-grep-args.nvim"},
         },
         config = function()
-            require("telescope").load_extension("live_grep_args")
+            local telescope = require("telescope")
+            telescope.load_extension("live_grep_args")
         end
     }
 
     use "folke/todo-comments.nvim"
+    use "folke/zen-mode.nvim"
 
     use "NazgoooAtanasov/gitspector"
 
-    -- use "~/_Projects/sfcc-debugger.nvim"
-    -- use "~/_Projects/sfcc-cartridges.nvim"
+    use "~/_Projects/sfcc-debugger.nvim"
+    use "~/_Projects/sfcc-cartridges.nvim"
+    use "~/_Projects/sfcc-goto.nvim"
+    use "~/_Projects/sfcc-file-watcher.nvim"
+
+    use { 'rush-rs/tree-sitter-asm' }
 end)
 
 -- html syntax for isml files
@@ -99,8 +118,8 @@ vim.cmd([[autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != "c"
 vim.cmd([[autocmd FileChangedShellPost *
         \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None]])
 
-local configs = require"nvim-treesitter.configs"
-configs.setup {
+local configs = require("nvim-treesitter.configs")
+configs.setup({
     ensure_installed = {
         "lua",
         "typescript",
@@ -120,32 +139,32 @@ configs.setup {
     indent = {
         enable = true, -- default is disabled anyways
     },
-
-    rainbow = {
-        enable = true,
-        extended_mode = true,
-        max_file_lines = nil
-    }
-}
+})
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
-local lsp_installer = require("nvim-lsp-installer")
-lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    if server.name == "lua_ls" then
-        opts = {
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { "vim", "use" }
-                    }
-                }
-            }
-        }
-    end
-    server:setup(opts)
-end)
+require('lspconfig').lua_ls.setup({
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+})
 
 local keymap = vim.api.nvim_set_keymap
 local function nkeymap(key, map)
@@ -155,6 +174,7 @@ end
 vim.g.mapleader = " "
 -- lsp keybinds
 nkeymap("gd", ":lua vim.lsp.buf.definition()<cr>")
+nkeymap("gs", ":lua require('sfcc-goto').setup()<cr>")
 nkeymap("gD", ":lua vim.lsp.buf.declaration()<cr>")
 nkeymap("gi", ":lua vim.lsp.buf.implementation()<cr>")
 nkeymap("gw", ":lua vim.lsp.buf.document_symbol()<cr>")
@@ -169,9 +189,9 @@ nkeymap("<leader>jd", ":JsDoc<cr>")
 nkeymap("<leader>dd", ":Telescope diagnostics<cr>")
 
 -- navigation keybinds
-nkeymap("<leader><leader>", ":lua require('telescope.builtin').find_files()<cr>")
-nkeymap("<leader>/", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>")
-nkeymap("<leader>,", ":lua require('telescope.builtin').buffers()<cr>")
+nkeymap("<leader><leader>", ":lua require('telescope.builtin').find_files(require('telescope.themes').get_ivy())<cr>")
+nkeymap("<leader>/", ":lua require('telescope').extensions.live_grep_args.live_grep_args(require('telescope.themes').get_ivy())<cr>")
+nkeymap("<leader>,", ":lua require('telescope.builtin').buffers(require('telescope.themes').get_ivy())<cr>")
 nkeymap("<leader>gg", ":G<cr>")
 nkeymap("<leader>op", ":Explore<cr>")
 nkeymap("<leader>bk", ":bd<cr>")
@@ -192,7 +212,7 @@ nkeymap("<leader>br", ":lua require('gitspector').branches_list()<cr>")
 nkeymap("H", "")
 nkeymap("L", "")
 
--- require('sfcc-cartridges').setup({ sourceName = "sfcc" })
+require('sfcc-cartridges').setup({ sourceName = "sfcc" })
 
 local lspkind = require("lspkind")
 local cmp = require("cmp")
@@ -265,26 +285,35 @@ cmp.setup.cmdline(":", { sources = cmp.config.sources({ { name = "path" } }, { {
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require("lspconfig")["tsserver"].setup({
+require("lspconfig").tsserver.setup({
     capabilities = capabilities
 })
 
+require("lspconfig").svelte.setup({})
+require("lspconfig").clangd.setup({})
+require("lspconfig").elixirls.setup({
+    cmd = {"/usr/lib/elixir-ls/language_server.sh"}
+})
+require("lspconfig").hls.setup({})
+require("lspconfig").rust_analyzer.setup({})
+require("lspconfig").cssls.setup({});
+
 -- emet config
-local lspconfig = require("lspconfig")
-local lspconfig_configs = require("lspconfig.configs")
-local util = require("lspconfig.util")
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-if not lspconfig.emmet_ls then
-    configs.emmet_ls = {
-        default_config = {
-            cmd = {"emmet-ls", "--stdio"};
-            filetypes = {"html", "css", "scss", "blade", "isml"};
-            root_dir = "~/.local/share/nvim/lsp_servers/emmet_ls",
-            settings = {};
-        };
-    }
-end
-lspconfig.emmet_ls.setup({ capabilities = capabilities })
+-- local lspconfig = require("lspconfig")
+-- local lspconfig_configs = require("lspconfig.configs")
+-- local util = require("lspconfig.util")
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- if not lspconfig.emmet_ls then
+--     configs.emmet_ls = {
+--         default_config = {
+--             cmd = {"emmet-ls", "--stdio"};
+--             filetypes = {"html", "css", "scss", "blade", "isml"};
+--             root_dir = "~/.local/share/nvim/lsp_servers/emmet_ls",
+--             settings = {};
+--         };
+--     }
+-- end
+-- lspconfig.emmet_ls.setup({ capabilities = capabilities })
 
 -- status line
 require("lualine").setup({
@@ -307,8 +336,18 @@ let g:ale_fixers = {
 \   "javascriptreact": ["prettier"],
 \   "svelte": ["prettier"]
 \}]])
-vim.cmd([[ let g:ale_pattern_options = {'\.isml$': {'ale_enabled': 0}} ]])
 vim.cmd([[let g:ale_fix_on_save = 1]])
-vim.cmd([[colorscheme tokyonight-storm]])
+vim.cmd([[set background=dark]])
+vim.cmd([[colorscheme rose-pine]])
 
 require("todo-comments").setup()
+
+require('telescope').setup({})
+
+require('nvim-treesitter.parsers').get_parser_configs().asm = {
+    install_info = {
+        url = 'https://github.com/rush-rs/tree-sitter-asm.git',
+        files = { 'src/parser.c' },
+        branch = 'main',
+    },
+}

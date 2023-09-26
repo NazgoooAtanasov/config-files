@@ -43,10 +43,11 @@ alias v="nvim"
 alias tr="GIT_SSH_COMMAND='ssh -i /home/ng/.ssh/trimtex'"
 alias ac="cd /home/ng/_Forkpoint/acne/app-project"
 alias githardreset="git fetch && git reset --hard @{u}"
+alias ch="git branch -a | grep -v \"remotes\" | fzf | xargs git checkout"
 alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
 alias tmuxd="tmux detach"
 alias tmux="tmux -u"
-alias sd="cd \$(find . -type d -not -path '*/node_modules/*' | fzf)"
+alias sd="cd \$(find . -maxdepth 2 -type d -not -path '*/node_modules/*' -not -path '*/.cache/*' -not -path '*/.cargo/*' -not -path '*/.npm/*' -not -path '*/.git/*' -not -path '*/.vscode/*' -not -path '*/.local/*' -not -path '*/.vscode-oss/*' -not -path '*/.swa/*' | fzf)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -54,3 +55,5 @@ export NVM_DIR="$HOME/.nvm"
 
 [[ ${BLE_VERSION-} ]] && ble-attach
 source /usr/share/nvm/init-nvm.sh
+
+[ -f "/home/ng/.ghcup/env" ] && source "/home/ng/.ghcup/env" # ghcup-env

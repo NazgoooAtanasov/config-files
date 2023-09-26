@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/ng/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/ng/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/ng/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/ng/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/ng/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/home/ng/.cache/nvim/packer_hererocks/2.1.1692616192/share/lua/5.1/?.lua;/home/ng/.cache/nvim/packer_hererocks/2.1.1692616192/share/lua/5.1/?/init.lua;/home/ng/.cache/nvim/packer_hererocks/2.1.1692616192/lib/luarocks/rocks-5.1/?.lua;/home/ng/.cache/nvim/packer_hererocks/2.1.1692616192/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/ng/.cache/nvim/packer_hererocks/2.1.1692616192/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -78,6 +78,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
+  },
+  ["NeoSolarized.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/NeoSolarized.nvim",
+    url = "https://github.com/Tsuzat/NeoSolarized.nvim"
   },
   ale = {
     loaded = true,
@@ -109,16 +114,6 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["doom-one.vim"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/doom-one.vim",
-    url = "https://github.com/romgrk/doom-one.vim"
-  },
-  ["dracula.nvim"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/dracula.nvim",
-    url = "https://github.com/Mofiqul/dracula.nvim"
-  },
   gitspector = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/gitspector",
@@ -138,6 +133,23 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
+  ["markdown-preview.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim",
+    url = "https://github.com/iamcco/markdown-preview.nvim"
+  },
+  moonfly = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/moonfly",
+    url = "https://github.com/bluz71/vim-moonfly-colors"
+  },
+  neovim = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/neovim",
+    url = "https://github.com/rose-pine/neovim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -164,11 +176,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
-  },
-  ["nvim-markdown-preview"] = {
-    loaded = true,
-    path = "/home/ng/.local/share/nvim/site/pack/packer/start/nvim-markdown-preview",
-    url = "https://github.com/davidgranstrom/nvim-markdown-preview"
   },
   ["nvim-transparent"] = {
     loaded = true,
@@ -201,13 +208,33 @@ _G.packer_plugins = {
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["sfcc-cartridges.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-cartridges.nvim",
+    url = "/home/ng/_Projects/sfcc-cartridges.nvim"
+  },
+  ["sfcc-debugger.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-debugger.nvim",
+    url = "/home/ng/_Projects/sfcc-debugger.nvim"
+  },
+  ["sfcc-file-watcher.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-file-watcher.nvim",
+    url = "/home/ng/_Projects/sfcc-file-watcher.nvim"
+  },
+  ["sfcc-goto.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/sfcc-goto.nvim",
+    url = "/home/ng/_Projects/sfcc-goto.nvim"
+  },
   ["telescope-live-grep-args.nvim"] = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/telescope-live-grep-args.nvim",
     url = "https://github.com/nvim-telescope/telescope-live-grep-args.nvim"
   },
   ["telescope.nvim"] = {
-    config = { "\27LJ\2\nS\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\19live_grep_args\19load_extension\14telescope\frequire\0" },
+    config = { "\27LJ\2\nS\0\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0'\3\3\0B\1\2\1K\0\1\0\19live_grep_args\19load_extension\14telescope\frequire\0" },
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
@@ -221,6 +248,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
+  },
+  ["tree-sitter-asm"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/tree-sitter-asm",
+    url = "https://github.com/rush-rs/tree-sitter-asm"
   },
   ["vim-commentary"] = {
     loaded = true,
@@ -251,18 +283,39 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ng/.local/share/nvim/site/pack/packer/start/vim-lastplace",
     url = "https://github.com/farmergreg/vim-lastplace"
+  },
+  ["vim-orbital"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/vim-orbital",
+    url = "https://github.com/fcpg/vim-orbital"
+  },
+  ["zen-mode.nvim"] = {
+    loaded = true,
+    path = "/home/ng/.local/share/nvim/site/pack/packer/start/zen-mode.nvim",
+    url = "https://github.com/folke/zen-mode.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
+-- Setup for: markdown-preview.nvim
+time([[Setup for markdown-preview.nvim]], true)
+try_loadstring("\27LJ\2\n=\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rmarkdown\19mkdp_filetypes\6g\bvim\0", "setup", "markdown-preview.nvim")
+time([[Setup for markdown-preview.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\nS\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\19live_grep_args\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
+try_loadstring("\27LJ\2\nS\0\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0'\3\3\0B\1\2\1K\0\1\0\19live_grep_args\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
 time([[Config for telescope.nvim]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

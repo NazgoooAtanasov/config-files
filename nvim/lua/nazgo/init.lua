@@ -1,0 +1,8 @@
+require("nazgo.lazy")
+require("nazgo.sets")
+require("nazgo.cmds")
+require("nazgo.treesitter")
+require("nazgo.keymaps")
+require("nazgo.cmp")
+require("nazgo.lsp")
+require("nazgo.ale")

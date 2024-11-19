@@ -67,6 +67,7 @@ modkey = "Mod4"
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
+    awful.layout.suit.tile.bottom,
     awful.layout.suit.max.fullscreen
 }
 
@@ -300,6 +301,9 @@ awful.key({ modkey }, "Tab", function() awful.layout.inc(1) end),
     awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run") end,
               {description = "run prompt", group = "launcher"}),
 
+    awful.key({ modkey },            "d",     function () awful.spawn("rofi -show drun") end,
+              {description = "run prompt", group = "launcher"}),
+
     awful.key({ modkey }, "z", function() awful.spawn("copyq toggle") end,
               {description = "copyq toggle", group = "awesome"}),
 
@@ -435,7 +439,9 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "GLShaders"
+        },
 
         name = {
           "Event Tester",  -- xev.
@@ -488,11 +494,12 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
           "picom --no-fading-openclose --fade-in-step=1 --fade-out-step=1 --fade-delta=0",
           "nitrogen --restore",
           "setxkbmap -model pc105 -option \"grp:shifts_toggle,compose:    sclk\" \"us,bg(phonetic)\"",
-          "mailspring &",
+          "mailspring --password-store=\"gnome-libsecret\"",
           "nm-applet &",
           "emacsclient &",
-          "/usr/lib/polkit-kde-authentication-agent-1 &"
-          -- "/home/ng/.screenlayout/screens.sh"
+          "/usr/lib/polkit-kde-authentication-agent-1 &",
+          "/usr/bin/dunst &",
+          "/home/ng/.screenlayout/3-desktop.sh &"
       }
       for _, i in pairs(cmds) do
           awful.util.spawn(i)

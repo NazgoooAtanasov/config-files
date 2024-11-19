@@ -26,6 +26,8 @@ PATH=$PATH:/home/nazgo/.emacs.d/bin
 PATH=$PATH:/home/ng/.cargo/bin
 PATH=$PATH:/home/ng/eclipse
 PATH=$PATH:/home/ng/_Projects/lsp/target/release
+PATH=$PATH:/opt/asdf-vm/bin
+PATH=$PATH:/home/ng/bin/depot_tools
 
 export ANDROID_HOME=/home/ng/Android/Sdk
 
@@ -46,6 +48,7 @@ alias githardreset="git fetch && git reset --hard @{u}"
 alias ch="git branch -a | grep -v \"remotes\" | fzf | xargs git checkout"
 alias personal="GIT_SSH_COMMAND='ssh -i /home/nazgo/.ssh/personal'"
 alias tmuxd="tmux detach"
+alias tmuxks="tmux kill-session"
 alias tmux="tmux -u"
 alias sd="cd \$(find . -maxdepth 2 -type d -not -path '*/node_modules/*' -not -path '*/.cache/*' -not -path '*/.cargo/*' -not -path '*/.npm/*' -not -path '*/.git/*' -not -path '*/.vscode/*' -not -path '*/.local/*' -not -path '*/.vscode-oss/*' -not -path '*/.swa/*' | fzf)"
 
@@ -57,3 +60,7 @@ export NVM_DIR="$HOME/.nvm"
 source /usr/share/nvm/init-nvm.sh
 
 [ -f "/home/ng/.ghcup/env" ] && source "/home/ng/.ghcup/env" # ghcup-env
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

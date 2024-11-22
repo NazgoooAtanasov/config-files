@@ -24,7 +24,7 @@ return {
   { "tpope/vim-fugitive" },
   { "RRethy/vim-illuminate" },
   { "rush-rs/tree-sitter-asm" },
-  { "dense-analysis/ale" },
+  { "mfussenegger/nvim-lint" },
 
   -- completion thingies
   { "hrsh7th/cmp-nvim-lsp" },
@@ -35,12 +35,12 @@ return {
   { "L3MON4D3/LuaSnip" },
   { "saadparwaiz1/cmp_luasnip" },
 
-  { 
+  {
     "nvim-telescope/telescope.nvim",
-    dependencies = { 
+    dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-live-grep-args.nvim" }
-    } 
+    }
   },
 
   { "NazgoooAtanasov/gitspector" },

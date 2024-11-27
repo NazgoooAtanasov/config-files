@@ -1,6 +1,6 @@
 local lspconf = require("lspconfig")
 
-lspconf.tsserver.setup({
+lspconf.ts_ls.setup({
   settings = {
     implicitProjectConfiguration = {
       -- checkJs = true

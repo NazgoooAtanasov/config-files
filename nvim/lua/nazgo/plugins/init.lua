@@ -1,6 +1,6 @@
 return {
-  -- copilot
-  { "github/copilot.vim" },
+  -- -- copilot
+  -- { "github/copilot.vim" },
 
   -- diffview
   { "sindrets/diffview.nvim" },

@@ -1,3 +1,4 @@
+require("nazgo.filetypes")
 require("nazgo.lazy")
 require("nazgo.sets")
 require("nazgo.cmds")

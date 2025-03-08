@@ -1,3 +1,5 @@
+local avante = require('nazgo.plugins.avante')
+
 return {
   -- -- copilot
   -- { "github/copilot.vim" },
@@ -7,7 +9,7 @@ return {
 
   -- treesitter and lsp
   { "nvim-treesitter/nvim-treesitter" },
-  { "nvim-treesitter/nvim-treesitter-context" },
+  -- { "nvim-treesitter/nvim-treesitter-context" },
   { "nvim-treesitter/playground" },
   { "neovim/nvim-lspconfig" },
   { "williamboman/nvim-lsp-installer" },
@@ -44,4 +46,6 @@ return {
   },
 
   { "NazgoooAtanasov/gitspector" },
+
+  avante,
 }

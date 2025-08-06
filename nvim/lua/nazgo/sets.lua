@@ -21,3 +21,6 @@ vim.g.netrw_localcopydircmd = "cp -r"
 vim.g.netrw_localmkdir = "mkdir -p"
 vim.g.netrw_localrmdir = "rm -r"
 vim.g.netrw_sort_sequence = [[[\/]$,*]]
+
+-- vim.cmd([[let g:prettier#autoformat = 1]])
+-- vim.cmd([[let g:prettier#autoformat_require_pragma = 0]])

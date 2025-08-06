@@ -11,7 +11,6 @@ cmp.setup({
 
   experimental = {
     native_menu = false,
-    ghost_text = true
   },
 
   mapping = {
@@ -60,7 +59,6 @@ cmp.setup({
         nvim_lsp = "[lsp]",
         luasnip = "[luasnip]",
         buffer = "[buff]",
-        kur = "[kur]"
       }
     }
   }
@@ -88,4 +86,3 @@ cmp.setup.cmdline(":", {
 })
 
 local capabilities = cmp_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-

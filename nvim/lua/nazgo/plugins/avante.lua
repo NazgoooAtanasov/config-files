@@ -2,7 +2,12 @@ return {
   "yetone/avante.nvim",
   event = "VeryLazy",
   opts = { 
-    provider = "copilot",
+    provider = "claude",
+    providers = {
+      claude = {
+        model = "claude-sonnet-4-20250514"
+      }
+    }
   },
   build = "make",
   dependencies = {

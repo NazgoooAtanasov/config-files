@@ -1,9 +1,6 @@
 local avante = require('nazgo.plugins.avante')
 
 return {
-  -- -- copilot
-  -- { "github/copilot.vim" },
-
   -- diffview
   { "sindrets/diffview.nvim" },
 
@@ -47,5 +44,5 @@ return {
 
   { "NazgoooAtanasov/gitspector" },
 
-  avante,
+  { "prettier/vim-prettier", build = "yarn install --frozen-lockfile --production" }
 }

@@ -5,3 +5,9 @@ vim.filetype.add({
     c3t = "c3",
   },
 })
+
+vim.filetype.add({
+  extension = {
+    pi = "pig"
+  }
+})

@@ -6,6 +6,7 @@ end
 
 -- lsp related binds
 normalkeymap("gd", ":lua vim.lsp.buf.definition()<cr>")
+normalkeymap("gi", ":lua vim.lsp.buf.implementation()<cr>")
 normalkeymap("gr", ":lua vim.lsp.buf.references()<cr>")
 normalkeymap("gt", ":lua vim.lsp.buf.type_definition()<cr>")
 normalkeymap("K", ":lua vim.lsp.buf.hover()<cr>")

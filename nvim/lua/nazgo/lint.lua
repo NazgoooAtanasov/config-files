@@ -1,8 +1,9 @@
 local lint = require("lint")
 
+vim.env.ESLINT_D_PPID = vim.fn.getpid()
 lint.linters_by_ft = {
-  javascript = { "eslint" },
-  typescriptreact = { "eslint" }
+  javascript = { "eslint_d" },
+  typescriptreact = { "eslint_d" }
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

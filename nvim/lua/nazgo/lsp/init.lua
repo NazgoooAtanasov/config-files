@@ -1,9 +1,9 @@
 local lspconf = require("lspconfig")
 
 lspconf.ts_ls.setup({})
-lspconf.tailwindcss.setup({})
+-- lspconf.tailwindcss.setup({})
 lspconf.svelte.setup({})
-lspconf.emmet_ls.setup({})
+-- lspconf.emmet_ls.setup({})
 lspconf.cssls.setup({})
 
 lspconf.clangd.setup({ cmd = { "clangd", "--offset-encoding=utf-16", }, })

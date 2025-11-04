@@ -6,6 +6,7 @@
 (setq org-directory "~/org/")
 (setq projectile-project-search-path '("~/_Projects/" "~/_Forkpoint/"))
 (setq flycheck-javascript-eslint-executable "eslint_d")
+(setq +workspaces-switch-project-function 'magit)
 
 (after! corfu
   (map! :map corfu-map
@@ -31,6 +32,16 @@
         :n "s" #'evil-window-vsplit
         :n "h" #'evil-window-split)
       (:prefix "w"
-        :n "o" #'delete-other-windows))
+        :n "o" #'delete-other-windows)
+      (:prefix "e"
+        :n "f" #'lsp-eslint-fix-all))
+
+(map! :after dired
+      :map dired-mode-map
+      :n "%" #'dired-create-empty-file)
 
 (add-to-list 'auto-mode-alist '("\\.isml\\'" . web-mode))
+
+(savehist-mode 1)
+(add-to-list 'savehist-additional-variables 'compile-history)
+(add-to-list 'savehist-additional-variables 'compile-command)

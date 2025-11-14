@@ -45,3 +45,9 @@
 (savehist-mode 1)
 (add-to-list 'savehist-additional-variables 'compile-history)
 (add-to-list 'savehist-additional-variables 'compile-command)
+;; (setq treesit-language-source-alist '(append treesit-language-source-alist '(cpp "https://github.com/tree-sitter/tree-sitter-cpp" nil nil nil nil)))
+(after! treesit
+  (add-to-list 'treesit-language-source-alist '(cpp "https://github.com/tree-sitter/tree-sitter-cpp" nil nil nil nil))
+  )
+
+;; (print treesit-language-source-alist)

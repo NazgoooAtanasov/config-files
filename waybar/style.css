@@ -1,0 +1,33 @@
+window#waybar {
+  background-color: transparent;
+}
+
+#window, #workspaces, .modules-right {
+  background: rgba(18, 18, 18, 1.0);
+  border: 1 solid rgba(70, 70, 70, 1.0);
+  border-radius: 5px;
+  color: rgba(213, 213, 213, 1.0);
+}
+
+#window { 
+  margin: 5px 0 0 5px;
+  padding: 0 5px;
+}
+
+#window.empty {
+  background: none;
+}
+
+#workspaces {
+  margin: 5px 0 0 5px;
+}
+
+#workspaces button {
+  padding: 2px 5px;
+  color: rgba(213, 213, 213, 1.0);
+}
+
+.modules-right {
+  margin: 5px 5px 0 5px;
+  padding: 2px 5px;
+}

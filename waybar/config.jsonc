@@ -1,0 +1,47 @@
+// -*- mode: jsonc -*-
+{
+    "height": 37,
+    "spacing": 4,
+    "modules-left": [
+      "hyprland/workspaces",
+      "custom/media",
+    ],
+    "modules-center": [
+      "hyprland/window"
+    ],
+    "modules-right": [
+      "tray",
+      "cpu",
+      "memory",
+      "clock",
+      "hyprland/language",
+      "network",
+      "custom/hyprland-layout"
+    ],
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "| {:%Y-%m-%d} |"
+    },
+    "cpu": {
+      "format": "| {usage}% \uD83E\uDDE0 |",
+      "tooltip": false
+    },
+    "memory": {
+      "format": " {}% \uD83D\uDCE6 |"
+    },
+    "network": {
+        "format-ethernet": "| {ipaddr}/{cidr} |"
+    },
+    "hyprland/language": {
+      "format-en": "| EN",
+      "format-bg": "| BG"
+    },
+    "custom/hyprland-layout": {
+      "exec": "~/.config/waybar/hyprland-layout.sh",
+      "format": "L: {}",
+      "signal": 30
+    }
+}

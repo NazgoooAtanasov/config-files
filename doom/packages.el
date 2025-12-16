@@ -14,6 +14,7 @@
 ;; (package! some-package)
 
 (package! gruber-darker-theme)
+(package! qbe-mode :recipe (:type git :host github :repo "mbknust/qbe-mode"))
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

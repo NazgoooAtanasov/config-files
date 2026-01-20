@@ -7,3 +7,4 @@ keybind = ctrl+shift+5=goto_tab:5
 keybind = ctrl+shift+6=goto_tab:6
 keybind = ctrl+shift+7=goto_tab:7
 
+keybind = shift+enter=text:\x1b\r

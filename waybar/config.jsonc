@@ -1,22 +1,16 @@
 // -*- mode: jsonc -*-
 {
+    "mode": "hide",
+    "start_hidden": true,
     "height": 37,
     "spacing": 4,
-    "modules-left": [
-      "hyprland/workspaces",
-      "custom/media",
-    ],
-    "modules-center": [
-      "hyprland/window"
-    ],
     "modules-right": [
       "tray",
       "cpu",
       "memory",
       "clock",
-      "hyprland/language",
+      "niri/language",
       "network",
-      "custom/hyprland-layout"
     ],
     "tray": {
         "spacing": 10
@@ -35,13 +29,8 @@
     "network": {
         "format-ethernet": "| {ipaddr}/{cidr} |"
     },
-    "hyprland/language": {
+    "niri/language": {
       "format-en": "| EN",
       "format-bg": "| BG"
-    },
-    "custom/hyprland-layout": {
-      "exec": "~/.config/waybar/hyprland-layout.sh",
-      "format": "L: {}",
-      "signal": 30
     }
 }

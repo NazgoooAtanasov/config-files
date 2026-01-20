@@ -55,7 +55,7 @@ alias tmuxd="tmux detach"
 alias tmuxks="tmux kill-session"
 alias tmux="tmux -u"
 alias ch="git branch -a | grep -v \"remotes\" | fzf | xargs git checkout"
-alias sd="cd \$(find . -maxdepth 2 -type d -not -path '*/node_modules/*' -not -path '*/.cache/*' -not -path '*/.cargo/*' -not -path '*/.npm/*' -not -path '*/.git/*' -not -path '*/.vscode/*' -not -path '*/.local/*' -not -path '*/.vscode-oss/*' -not -path '*/.swa/*' | fzf)"
+alias sd="cd \$(find . -maxdepth 3 -type d -not -path '*/node_modules/*' -not -path '*/.cache/*' -not -path '*/.cargo/*' -not -path '*/.npm/*' -not -path '*/.git/*' -not -path '*/.vscode/*' -not -path '*/.local/*' -not -path '*/.vscode-oss/*' -not -path '*/.swa/*' | fzf)"
 
 # bun completions
 [ -s "/home/ng/.bun/_bun" ] && source "/home/ng/.bun/_bun"

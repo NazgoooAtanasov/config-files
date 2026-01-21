@@ -29,6 +29,7 @@ spawn-at-startup "flameshot"
 spawn-at-startup "copyq"
 spawn-sh-at-startup "gammastep -O 3000"
 spawn-sh-at-startup "emacs --daemon"
+spawn-sh-at-startup "swaybg -i ~/config-files/niri/wallpaper.jpg"
 
 prefer-no-csd
 
@@ -46,6 +47,7 @@ window-rule {
     match title="Helium"
     match title="Emacs"
     match title="Slack"
+    match title="Code"
     open-maximized true
 }
 
